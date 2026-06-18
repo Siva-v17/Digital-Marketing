@@ -9,75 +9,93 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <style>
-  /* ============ HERO ============ */
+
+/* ============ HERO ============ */
 .hero{
   min-height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   position:relative;
-  padding-top:120px;
+  padding-top:100px;
   overflow:hidden;
 }
 .hero-bg{position:absolute; inset:0; z-index:0;}
-.hero-growth-svg{position:absolute; inset:0; width:100%; height:100%; opacity:0.55;}
+.hero-growth-svg{position:absolute; inset:0; width:100%; height:100%; opacity:0.45;}
 .hero-grid{
   position:absolute; inset:0;
-  background-image:
-    linear-gradient(rgba(245,243,238,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245,243,238,0.04) 1px, transparent 1px);
+  background-image:linear-gradient(rgba(245,243,238,0.04) 1px, transparent 1px),linear-gradient(90deg, rgba(245,243,238,0.04) 1px, transparent 1px);
   background-size:64px 64px;
   mask-image:radial-gradient(circle at 50% 30%, black, transparent 75%);
 }
-.hero-blob{
+.hero-blob{position:absolute; border-radius:50%; filter:blur(80px); opacity:0.45;}
+.blob-1{width:520px; height:520px; background:var(--violet); top:-100px; right:-120px; animation:floatBlob 12s ease-in-out infinite;}
+.blob-2{width:420px; height:420px; background:var(--signal); bottom:-140px; left:-100px; opacity:0.3; animation:floatBlob 14s ease-in-out infinite reverse;}
+@keyframes floatBlob{0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(40px,-30px) scale(1.08);}}
+
+/* Two-column hero layout */
+.hero .container{
+  position:relative; z-index:2;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
+  min-height:calc(100vh - 100px);
+  padding-bottom:80px;
+}
+.hero-inner{display:flex; flex-direction:column; justify-content:center;}
+.hero-title{font-size:clamp(42px,7vw,96px); margin:10px 0 26px; line-height:1.05;}
+.hero-title .split-line{display:block;}
+.hero-sub{font-size:clamp(16px,1.8vw,19px); color:var(--muted); max-width:500px; margin-bottom:40px; line-height:1.7;}
+.hero-actions{display:flex; gap:18px; flex-wrap:wrap; margin-bottom:48px;}
+
+/* Mini stat strip */
+.hero-mini-stats{display:flex; gap:32px; padding-top:4px;}
+.hms-item{display:flex; flex-direction:column;}
+.hms-num{font-family:var(--f-display); font-size:22px; font-weight:700; background:linear-gradient(95deg,var(--violet),var(--signal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;}
+.hms-label{font-size:12px; color:var(--muted); margin-top:2px;}
+
+/* Hero image column */
+.hero-img-col{
+  position:relative;
+  align-self:stretch;
+  min-height:500px;
+  border-radius:24px;
+  overflow:hidden;
+}
+.hero-img-col img{width:100%; height:100%; object-fit:cover; display:block;}
+.hero-img-col::after{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(135deg, rgba(109,91,255,0.2), transparent 55%);
+  pointer-events:none;
+}
+.hero-float-cards{position:absolute; inset:0; pointer-events:none;}
+.hero-float-card{
   position:absolute;
-  border-radius:50%;
-  filter:blur(80px);
-  opacity:0.5;
+  background:rgba(10,10,18,0.88);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:14px;
+  padding:16px 20px;
 }
-.blob-1{
-  width:520px; height:520px;
-  background:var(--violet);
-  top:-100px; right:-120px;
-  animation:floatBlob 12s ease-in-out infinite;
-}
-.blob-2{
-  width:420px; height:420px;
-  background:var(--signal);
-  bottom:-140px; left:-100px;
-  opacity:0.35;
-  animation:floatBlob 14s ease-in-out infinite reverse;
-}
-@keyframes floatBlob{
-  0%,100%{transform:translate(0,0) scale(1);}
-  50%{transform:translate(40px,-30px) scale(1.08);}
-}
-.hero-inner{position:relative; z-index:2;}
-.hero-title{
-  font-size:clamp(48px, 9vw, 118px);
-  margin:6px 0 28px;
-}
-.hero-title .split-line{margin-bottom:-6px;}
-.hero-sub{
-  font-size:clamp(17px,2vw,21px);
-  color:var(--muted);
-  max-width:560px;
-  margin-bottom:42px;
-}
-.hero-actions{display:flex; gap:18px; flex-wrap:wrap;}
+.hero-float-card.card-a{top:32px; right:28px;}
+.hero-float-card.card-b{bottom:80px; left:28px;}
+.hero-float-card.card-c{bottom:28px; right:28px; display:flex; align-items:center; gap:10px;}
+.hfc-label{font-family:var(--f-mono); font-size:11px; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px;}
+.hfc-value{font-family:var(--f-display); font-size:26px; font-weight:700; background:linear-gradient(95deg,var(--violet),var(--signal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1;}
+.hfc-sub{font-size:12px; color:rgba(255,255,255,0.45); margin-top:2px;}
+.hfc-dot{width:8px; height:8px; border-radius:50%; background:#22c55e; box-shadow:0 0 0 3px rgba(34,197,94,0.25); flex-shrink:0;}
+.hfc-live{font-family:var(--f-mono); font-size:11px; color:#22c55e;}
+
+/* scroll cue */
 .hero-scroll-cue{
-  position:absolute;
-  bottom:38px; left:50%;
-  transform:translateX(-50%);
-  display:flex; flex-direction:column; align-items:center; gap:10px;
-  z-index:2;
+  position:absolute; bottom:38px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:10px; z-index:2;
   font-family:var(--f-mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted);
 }
 .cue-line{width:1px; height:50px; background:linear-gradient(var(--violet-soft), transparent); position:relative; overflow:hidden;}
-.cue-line::after{
-  content:''; position:absolute; left:0; top:0; width:100%; height:14px; background:var(--signal);
-  animation:cueDrop 2s ease-in-out infinite;
-}
+.cue-line::after{content:''; position:absolute; left:0; top:0; width:100%; height:14px; background:var(--signal); animation:cueDrop 2s ease-in-out infinite;}
 @keyframes cueDrop{0%{top:-20px;} 100%{top:50px;}}
 
 /* ============ TRUSTED BY ============ */
@@ -88,135 +106,140 @@
 .trusted-logos span:hover{opacity:1; color:var(--paper);}
 
 /* ============ ABOUT TEASER ============ */
-.about-teaser{padding:140px 0;}
+.about-teaser{padding:100px 0;}
 .about-teaser-grid{display:grid; grid-template-columns:0.95fr 1.05fr; gap:80px; align-items:center;}
 .about-teaser-img{aspect-ratio:4/5;}
 .about-teaser-content h2{font-size:clamp(32px,4vw,48px); margin-bottom:22px;}
-.about-teaser-content p{color:var(--muted); font-size:17px; margin-bottom:36px;}
+.about-teaser-content p{color:var(--muted); font-size:17px; margin-bottom:24px;}
 .teaser-stats{display:flex; gap:42px; margin-bottom:38px; flex-wrap:wrap;}
 
 /* ============ SERVICES ============ */
-.services-section{padding:60px 0 140px;}
+.services-section{padding:60px 0 80px;}
 .services-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
 .service-card{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:38px 32px;
-  display:block;
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:0; overflow:hidden; display:block;
   transition:border-color .4s var(--ease), background .4s var(--ease);
-  transform-style:preserve-3d;
 }
 .service-card:hover{border-color:var(--violet-soft); background:var(--panel-soft);}
+.service-card-img{aspect-ratio:16/9; overflow:hidden;}
+.service-card-img img{width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease);}
+.service-card:hover .service-card-img img{transform:scale(1.05);}
+.service-card-body{padding:28px 26px;}
 .service-index{font-family:var(--f-mono); color:var(--signal-soft); font-size:14px;}
-.service-card h3{font-size:23px; margin:18px 0 12px;}
-.service-card p{color:var(--muted); font-size:15px; margin-bottom:20px;}
+.service-card-body h3{font-size:20px; margin:14px 0 10px;}
+.service-card-body p{color:var(--muted); font-size:14.5px; margin-bottom:18px;}
 .service-link{font-size:14px; font-weight:600; color:var(--violet-soft);}
 
-/* ============ PROJECTS RAIL ============ */
+/* ============ PROJECTS HORIZONTAL RAIL ============ */
 .projects-rail-section{background:var(--ink-soft); padding:0;}
 .rail-wrap{height:100vh; display:flex; flex-direction:column; justify-content:center; overflow:hidden; padding:80px 0;}
 .rail-header{margin-bottom:50px;}
 .rail-track{display:flex; gap:28px; padding-left:var(--gutter); width:max-content;}
 .rail-card{
   width:380px; flex-shrink:0;
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  overflow:hidden;
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
 }
 .rail-card .img-frame{aspect-ratio:4/3; border-radius:0;}
 .rail-card-meta{padding:26px;}
 .rail-card-meta h3{font-size:22px; margin:12px 0 8px;}
 .rail-card-meta p{color:var(--muted); font-size:14.5px;}
+.rail-result{font-family:var(--f-mono); font-size:12px; color:var(--signal-soft); border:1px solid var(--line); border-radius:100px; padding:5px 12px; display:inline-block; margin-top:10px;}
 .rail-card-end{
-  width:320px; flex-shrink:0;
-  display:flex; flex-direction:column; justify-content:center; gap:14px;
-  padding:36px;
+  width:320px; flex-shrink:0; display:flex; flex-direction:column; justify-content:center; gap:14px; padding:36px;
   background:linear-gradient(135deg, var(--violet), var(--signal));
 }
 .rail-card-end h3{font-size:24px; color:var(--paper);}
 .rail-card-end p{color:rgba(245,243,238,0.85); font-size:14.5px;}
 .rail-card-end .btn-accent{background:var(--ink); width:fit-content;}
 
+/* ============ WHY US ============ */
+.why-section{padding:80px 0 80px;}
+.why-grid{display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center;}
+.why-img-col{position:relative; padding-bottom:48px; padding-right:48px;}
+.why-img-main{aspect-ratio:4/5; border-radius:20px; overflow:hidden;}
+.why-img-main img{width:100%; height:100%; object-fit:cover;}
+.why-img-inset{
+  position:absolute; bottom:0; right:0;
+  width:58%; aspect-ratio:4/3; border-radius:14px; overflow:hidden;
+  border:4px solid var(--ink);
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+.why-img-inset img{width:100%; height:100%; object-fit:cover;}
+.why-content h2{font-size:clamp(30px,3.8vw,44px); margin-bottom:22px;}
+.why-content p{color:var(--muted); font-size:17px; margin-bottom:18px;}
+.why-list{margin:28px 0 36px; display:flex; flex-direction:column; gap:14px; list-style:none; padding:0;}
+.why-list li{display:flex; gap:14px; align-items:flex-start; font-size:15.5px; color:var(--paper);}
+.why-list li::before{content:''; width:20px; height:2px; background:var(--signal); flex-shrink:0; margin-top:11px;}
+
 /* ============ PROCESS ============ */
-.process-section{padding:140px 0;}
+.process-section{padding:80px 0 100px;}
 .process-list{border-top:1px solid var(--line);}
 .process-row{
-  display:grid;
-  grid-template-columns:80px 280px 1fr;
-  gap:40px;
-  padding:42px 0;
-  border-bottom:1px solid var(--line);
-  align-items:start;
+  display:grid; grid-template-columns:80px 260px 1fr 220px;
+  gap:40px; padding:42px 0; border-bottom:1px solid var(--line); align-items:start;
 }
 .process-num{font-family:var(--f-mono); color:var(--muted); font-size:15px;}
 .process-row h3{font-size:24px;}
-.process-row p{color:var(--muted); font-size:16px; max-width:520px;}
+.process-row p{color:var(--muted); font-size:16px; max-width:420px;}
+.process-row-img{aspect-ratio:3/2; border-radius:10px; overflow:hidden;}
+.process-row-img img{width:100%; height:100%; object-fit:cover;}
 
 /* ============ STATS BAND ============ */
 .stats-band{
   padding:90px 0;
   background:linear-gradient(135deg, rgba(109,91,255,0.12), rgba(255,91,60,0.08));
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
 }
 .stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:30px; text-align:center;}
 .stat-box{display:flex; flex-direction:column; gap:8px;}
 
 /* ============ TESTIMONIALS ============ */
-.testimonials-section{padding:140px 0;}
+.testimonials-section{padding:80px 0;}
 .testimonial-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-.testimonial-card{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:34px;
-}
-.testimonial-card p{font-size:16.5px; margin-bottom:28px; color:var(--paper);}
+.testimonial-card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:34px;}
+.testimonial-card p{font-size:16.5px; margin-bottom:28px; color:var(--paper); line-height:1.7;}
 .testimonial-person{display:flex; align-items:center; gap:14px;}
-.t-avatar{
-  width:44px; height:44px; border-radius:50%;
-  background:linear-gradient(135deg,var(--violet),var(--signal));
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--f-display); font-weight:700; font-size:14px;
-}
+.t-avatar{width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--violet),var(--signal)); display:flex; align-items:center; justify-content:center; font-family:var(--f-display); font-weight:700; font-size:14px;}
 .testimonial-person div strong{display:block; font-size:14.5px;}
 .testimonial-person div span{font-size:13px; color:var(--muted);}
 
 /* ============ BLOG PREVIEW ============ */
-.blog-preview-section{padding:60px 0 140px;}
+.blog-preview-section{padding:60px 0 80px;}
 .blog-preview-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
 .blog-card .img-frame{aspect-ratio:16/11; margin-bottom:22px;}
-.blog-card h3{font-size:21px; margin:14px 0 10px; line-height:1.3;}
+.blog-card h3{font-size:20px; margin:14px 0 10px; line-height:1.35;}
+.blog-card p{color:var(--muted); font-size:14px; margin-bottom:10px;}
 .blog-meta{font-family:var(--f-mono); font-size:12.5px; color:var(--muted);}
 
 /* ============ CTA ============ */
-.cta-section{padding:160px 0; text-align:center; position:relative;}
-.cta-section::before{
-  content:'';
-  position:absolute; inset:0;
-  background:radial-gradient(circle at 50% 50%, rgba(109,91,255,0.18), transparent 60%);
-}
+.cta-section{padding:100px 0; text-align:center; position:relative;}
+.cta-section::before{content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 50%, rgba(109,91,255,0.18), transparent 60%);}
 .cta-inner{position:relative; z-index:1; max-width:740px; margin:0 auto;}
 .cta-inner h2{font-size:clamp(36px,5.5vw,64px); margin-bottom:22px;}
 .cta-inner p{color:var(--muted); font-size:18px; margin-bottom:38px;}
 .cta-inner .magnetic-wrap{display:inline-block;}
 
 @media (max-width:1024px){
+  .hero .container{grid-template-columns:1fr; min-height:auto; gap:40px;}
+  .hero-img-col{min-height:360px; border-radius:16px; order:-1;}
   .about-teaser-grid{grid-template-columns:1fr; gap:48px;}
   .services-grid{grid-template-columns:repeat(2,1fr);}
   .testimonial-grid{grid-template-columns:1fr;}
   .blog-preview-grid{grid-template-columns:1fr;}
   .stats-grid{grid-template-columns:repeat(2,1fr);}
-  .process-row{grid-template-columns:50px 1fr; }
+  .process-row{grid-template-columns:50px 1fr; gap:20px;}
   .process-row p{grid-column:2;}
+  .process-row-img{display:none;}
+  .why-grid{grid-template-columns:1fr; gap:60px;}
+  .why-img-inset{display:none;}
+  .why-img-col{padding:0;}
 }
 @media (max-width:640px){
   .services-grid{grid-template-columns:1fr;}
   .hero-actions{flex-direction:column; align-items:flex-start;}
+  .hero-mini-stats{gap:20px;}
 }
-
 </style>
 <body>
 
@@ -227,7 +250,7 @@
   <div class="hero-bg">
     <svg class="hero-growth-svg" viewBox="0 0 1440 800" preserveAspectRatio="none">
       <path id="growthPath" d="M -50 650 C 200 650, 250 500, 400 520 C 550 540, 600 380, 760 360 C 920 340, 970 200, 1150 180 C 1300 165, 1380 90, 1500 60"
-            fill="none" stroke="url(#lineGrad)" stroke-width="3" />
+            fill="none" stroke="url(#lineGrad)" stroke-width="3"/>
       <defs>
         <linearGradient id="lineGrad" x1="0%" y1="100%" x2="100%" y2="0%">
           <stop offset="0%" stop-color="#6D5BFF"/>
@@ -240,20 +263,53 @@
     <div class="hero-blob blob-2"></div>
   </div>
 
-  <div class="container hero-inner">
-    <div class="eyebrow reveal">Digital marketing agency &middot; Est. 2016</div>
-    <h1 class="hero-title">
-      <span class="split-line"><span data-split="chars">We turn</span></span>
-      <span class="split-line"><span data-split="chars" data-delay="0.15" class="text-gradient">attention</span></span>
-      <span class="split-line"><span data-split="chars" data-delay="0.3">into revenue.</span></span>
-    </h1>
-    <p class="hero-sub reveal">Stackly is a performance-obsessed marketing agency. SEO, paid media, content, and brand &mdash; built around one number: your growth curve.</p>
-    <div class="hero-actions reveal">
-      <div class="magnetic-wrap">
-        <a href="contact.html" class="btn btn-accent">Start a project <span class="arrow">&rarr;</span></a>
+  <div class="container">
+    <!-- LEFT: headline + actions + mini stats -->
+    <div class="hero-inner">
+      <div class="eyebrow reveal">Digital marketing agency &middot; Est. 2016</div>
+      <h1 class="hero-title">
+        <span class="split-line"><span data-split="chars">We turn</span></span>
+        <span class="split-line"><span data-split="chars" data-delay="0.15" class="text-gradient">attention</span></span>
+        <span class="split-line"><span data-split="chars" data-delay="0.3">into revenue.</span></span>
+      </h1>
+      <p class="hero-sub reveal">Stackly is a performance-obsessed marketing agency. SEO, paid media, content, and brand &mdash; built around one number: your growth curve.</p>
+      <div class="hero-actions reveal">
+        <div class="magnetic-wrap">
+          <a href="contact.html" class="btn btn-accent">Start a project <span class="arrow">&rarr;</span></a>
+        </div>
+        <div class="magnetic-wrap">
+          <a href="projects.html" class="btn btn-outline">View our work</a>
+        </div>
       </div>
-      <div class="magnetic-wrap">
-        <a href="projects.html" class="btn btn-outline">View our work</a>
+      <div class="hero-mini-stats reveal">
+        <div class="hms-item"><span class="hms-num">240+</span><span class="hms-label">Brands scaled</span></div>
+        <div class="hms-item"><span class="hms-num">$86M</span><span class="hms-label">Ad spend managed</span></div>
+        <div class="hms-item"><span class="hms-num">9 yrs</span><span class="hms-label">In business</span></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: hero image with floating metric cards -->
+    <div class="hero-img-col reveal-scale">
+      <!-- Team at data dashboards — digital marketing agency at work -->
+      <img
+        src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2800&auto=format&fit=crop"
+        alt="Stackly digital marketing team reviewing live campaign performance dashboards"
+        loading="eager">
+      <div class="hero-float-cards">
+        <div class="hero-float-card card-a">
+          <p class="hfc-label">Average ROAS</p>
+          <p class="hfc-value">3.8x</p>
+          <p class="hfc-sub">Across active accounts</p>
+        </div>
+        <div class="hero-float-card card-b">
+          <p class="hfc-label">CAC reduction</p>
+          <p class="hfc-value">-34%</p>
+          <p class="hfc-sub">After 90-day restructure</p>
+        </div>
+        <div class="hero-float-card card-c">
+          <div class="hfc-dot"></div>
+          <span class="hfc-live">Live dashboards for every client</span>
+        </div>
       </div>
     </div>
   </div>
@@ -267,7 +323,7 @@
 <!-- ============ MARQUEE ============ -->
 <section class="marquee-section">
   <div class="marquee-track" data-speed="32">
-    <span><b>SEO</b> &middot; <b>Paid Media</b> &middot; <b>Content Strategy</b> &middot; <b>Brand Identity</b> &middot; <b>Email Marketing</b> &middot; <b>Conversion Design</b> &middot;</span>
+    <span><b>SEO</b> &middot; <b>Paid Media</b> &middot; <b>Content Strategy</b> &middot; <b>Brand Identity</b> &middot; <b>Email Marketing</b> &middot; <b>Conversion Design</b> &middot; <b>Analytics</b> &middot; <b>Lifecycle Flows</b> &middot;</span>
   </div>
 </section>
 
@@ -289,18 +345,20 @@
 <!-- ============ ABOUT TEASER ============ -->
 <section class="about-teaser" id="about">
   <div class="container about-teaser-grid">
+    <!-- Team workshop / collaborative strategy session -->
     <div class="img-frame about-teaser-img reveal-scale">
-      <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2400&auto=format&fit=crop" alt="Stackly strategy team collaborating in a workshop session" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2400&auto=format&fit=crop" alt="Stackly strategy team collaborating around data and campaign whiteboards" loading="lazy">
       <div class="frame-overlay"></div>
     </div>
     <div class="about-teaser-content">
       <div class="eyebrow reveal">Who we are</div>
       <h2 class="reveal" data-split-scroll="words">A growth partner, not a vendor.</h2>
       <p class="reveal">For nine years, Stackly has paired data science with creative instinct to build marketing engines that compound. We don't sell hours &mdash; we sell outcomes: pipeline, revenue, and brand equity that outlasts any single campaign.</p>
+      <p class="reveal">We're 38 people across New York and Lisbon. Every account gets a dedicated strategist, media buyer, and analyst. No juniors handed off after the pitch.</p>
       <div class="teaser-stats reveal-stagger">
         <div class="t-stat"><span class="stat-num" data-counter="9">0</span><span class="stat-label">Years in business</span></div>
         <div class="t-stat"><span class="stat-num" data-counter="240">0</span><span class="stat-label">Brands scaled</span></div>
-        <div class="t-stat"><span class="stat-num" data-counter="3.4" data-suffix="x">0</span><span class="stat-label">Avg. ROAS lift</span></div>
+        <div class="t-stat"><span class="stat-num" data-counter="3.8" data-suffix="x">0</span><span class="stat-label">Avg. ROAS lift</span></div>
       </div>
       <a href="about.html" class="btn btn-outline reveal">More about Stackly &rarr;</a>
     </div>
@@ -315,44 +373,86 @@
       <h2 data-split-scroll="words">Marketing services built to compound, not just convert.</h2>
       <p>Every engagement starts with your unit economics. Then we choose the channels that actually move them.</p>
     </div>
-
     <div class="services-grid reveal-stagger">
+
+      <!-- SEO: keyword research / search analytics on screen -->
       <a href="services.html" class="service-card" data-tilt>
-        <span class="service-index">01</span>
-        <h3>Search Engine Optimization</h3>
-        <p>Technical SEO, content architecture, and authority building that compounds organic traffic for years.</p>
-        <span class="service-link">Learn more &rarr;</span>
+        <div class="service-card-img">
+          <img src="https://images.unsplash.com/photo-1562577308-9e66f0c65ce5?q=80&w=1600&auto=format&fit=crop" alt="SEO keyword research and content architecture analysis" loading="lazy">
+        </div>
+        <div class="service-card-body">
+          <span class="service-index">01</span>
+          <h3>Search Engine Optimization</h3>
+          <p>Technical SEO, content architecture, and authority building that compounds organic traffic for years &mdash; not just a quarter.</p>
+          <span class="service-link">Learn more &rarr;</span>
+        </div>
       </a>
+
+      <!-- Paid Media: dual monitor ad platform setup -->
       <a href="services.html" class="service-card" data-tilt>
-        <span class="service-index">02</span>
-        <h3>Paid Media &amp; PPC</h3>
-        <p>Full-funnel media buying across Search, Meta, and programmatic &mdash; optimized to CAC, not clicks.</p>
-        <span class="service-link">Learn more &rarr;</span>
+        <div class="service-card-img">
+          <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1600&auto=format&fit=crop" alt="Paid media buyer managing Google Ads and Meta Ads campaigns" loading="lazy">
+        </div>
+        <div class="service-card-body">
+          <span class="service-index">02</span>
+          <h3>Paid Media &amp; PPC</h3>
+          <p>Full-funnel media buying across Search, Meta, and programmatic &mdash; optimized to CAC payback, not clicks or impressions.</p>
+          <span class="service-link">Learn more &rarr;</span>
+        </div>
       </a>
+
+      <!-- Brand: identity design / Figma moodboard -->
       <a href="services.html" class="service-card" data-tilt>
-        <span class="service-index">03</span>
-        <h3>Brand &amp; Identity</h3>
-        <p>Positioning, naming, and visual systems that make a brand instantly recognizable and hard to copy.</p>
-        <span class="service-link">Learn more &rarr;</span>
+        <div class="service-card-img">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1600&auto=format&fit=crop" alt="Brand identity design system and visual moodboard" loading="lazy">
+        </div>
+        <div class="service-card-body">
+          <span class="service-index">03</span>
+          <h3>Brand &amp; Identity</h3>
+          <p>Positioning, naming, and visual systems that make a brand instantly recognizable and hard for competitors to copy.</p>
+          <span class="service-link">Learn more &rarr;</span>
+        </div>
       </a>
+
+      <!-- Content: short-form video production -->
       <a href="services.html" class="service-card" data-tilt>
-        <span class="service-index">04</span>
-        <h3>Content &amp; Social</h3>
-        <p>Editorial strategy and always-on social production that builds audience, not just impressions.</p>
-        <span class="service-link">Learn more &rarr;</span>
+        <div class="service-card-img">
+          <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?q=80&w=1600&auto=format&fit=crop" alt="Short-form video content creation for social media channels" loading="lazy">
+        </div>
+        <div class="service-card-body">
+          <span class="service-index">04</span>
+          <h3>Content &amp; Social</h3>
+          <p>Editorial strategy and always-on social production that builds durable audience &mdash; not just inflated impression counts.</p>
+          <span class="service-link">Learn more &rarr;</span>
+        </div>
       </a>
+
+      <!-- Email: Klaviyo automation flows -->
       <a href="services.html" class="service-card" data-tilt>
-        <span class="service-index">05</span>
-        <h3>Email &amp; Lifecycle</h3>
-        <p>Retention flows and lifecycle campaigns that turn one-time buyers into compounding revenue.</p>
-        <span class="service-link">Learn more &rarr;</span>
+        <div class="service-card-img">
+          <img src="https://media.istockphoto.com/id/1090858480/photo/businessman-touching-screen-with-about-mailing.webp?a=1&b=1&s=612x612&w=0&k=20&c=AxtKrZCfSsrQ6uwztEimJNObcfs0PSNIVd4OlP0fLw0=" alt="Email lifecycle automation flows set up in Klaviyo" loading="lazy">
+        </div>
+        <div class="service-card-body">
+          <span class="service-index">05</span>
+          <h3>Email &amp; Lifecycle</h3>
+          <p>Retention flows and lifecycle campaigns that turn one-time buyers into a compounding, high-margin revenue line.</p>
+          <span class="service-link">Learn more &rarr;</span>
+        </div>
       </a>
+
+      <!-- CRO: heatmap / A/B test analysis -->
       <a href="services.html" class="service-card" data-tilt>
-        <span class="service-index">06</span>
-        <h3>Conversion &amp; CRO</h3>
-        <p>Landing page design and testing programs that close the gap between traffic and revenue.</p>
-        <span class="service-link">Learn more &rarr;</span>
+        <div class="service-card-img">
+          <img src="https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=1600&auto=format&fit=crop" alt="Conversion rate optimization heatmap and A/B test results" loading="lazy">
+        </div>
+        <div class="service-card-body">
+          <span class="service-index">06</span>
+          <h3>Conversion &amp; CRO</h3>
+          <p>Landing page design and structured testing programs that close the gap between the traffic you have and the revenue you deserve.</p>
+          <span class="service-link">Learn more &rarr;</span>
+        </div>
       </a>
+
     </div>
   </div>
 </section>
@@ -365,42 +465,94 @@
       <h2 data-split-scroll="words">Campaigns that moved the needle.</h2>
     </div>
     <div class="rail-track">
+      <!-- Northwave: fintech data dashboard -->
       <div class="rail-card">
-        <div class="img-frame"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2400&auto=format&fit=crop" alt="Northwave fintech rebrand and growth campaign dashboard" loading="lazy"><div class="frame-overlay"></div></div>
+        <div class="img-frame"><img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2400&auto=format&fit=crop" alt="Northwave fintech performance dashboard showing pipeline growth metrics" loading="lazy"><div class="frame-overlay"></div></div>
         <div class="rail-card-meta">
           <span class="tag">Fintech &middot; Brand + Paid</span>
           <h3>Northwave</h3>
-          <p>187% increase in qualified pipeline in 6 months.</p>
+          <p>Full rebrand plus paid media restructure in six months.</p>
+          <span class="rail-result">+187% qualified pipeline</span>
         </div>
       </div>
+      <!-- Fernly: e-commerce organic growth -->
       <div class="rail-card">
-        <div class="img-frame"><img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2400&auto=format&fit=crop" alt="Fernly e-commerce analytics and SEO performance review" loading="lazy"><div class="frame-overlay"></div></div>
+        <div class="img-frame"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2400&auto=format&fit=crop" alt="Fernly Goods e-commerce checkout and organic SEO growth" loading="lazy"><div class="frame-overlay"></div></div>
         <div class="rail-card-meta">
           <span class="tag">E-commerce &middot; SEO</span>
           <h3>Fernly Goods</h3>
-          <p>4.1x organic revenue growth year over year.</p>
+          <p>Topical content architecture rebuild &mdash; 180 new articles.</p>
+          <span class="rail-result">4.1x organic revenue YoY</span>
         </div>
       </div>
+      <!-- Orbital: SaaS product / content studio -->
       <div class="rail-card">
-        <div class="img-frame"><img src="https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=2400&auto=format&fit=crop" alt="Orbital Co product launch creative content shoot" loading="lazy"><div class="frame-overlay"></div></div>
+        <div class="img-frame"><img src="https://images.unsplash.com/photo-1587614382346-4ec70e388b28?q=80&w=2400&auto=format&fit=crop" alt="Orbital Co SaaS team working on content strategy" loading="lazy"><div class="frame-overlay"></div></div>
         <div class="rail-card-meta">
           <span class="tag">SaaS &middot; Content + Social</span>
           <h3>Orbital Co</h3>
-          <p>62K newsletter subscribers from a standing start.</p>
+          <p>Always-on content engine built from zero.</p>
+          <span class="rail-result">62K subscribers &mdash; 14 months</span>
         </div>
       </div>
+      <!-- Husk: retail / product lifestyle -->
       <div class="rail-card">
-        <div class="img-frame"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2400&auto=format&fit=crop" alt="Husk and Co retail email lifecycle marketing flow design" loading="lazy"><div class="frame-overlay"></div></div>
+        <div class="img-frame"><img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=2400&auto=format&fit=crop" alt="Husk and Co retail lifestyle product photography" loading="lazy"><div class="frame-overlay"></div></div>
         <div class="rail-card-meta">
           <span class="tag">Retail &middot; Lifecycle</span>
           <h3>Husk &amp; Co</h3>
-          <p>38% of total revenue now from retention flows.</p>
+          <p>11 lifecycle flows rebuilt, segmentation rebuilt.</p>
+          <span class="rail-result">38% of revenue from flows</span>
+        </div>
+      </div>
+      <!-- Vantage: CRO / SaaS landing page -->
+      <div class="rail-card">
+        <div class="img-frame"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2400&auto=format&fit=crop" alt="Vantage SaaS landing page A/B testing program results" loading="lazy"><div class="frame-overlay"></div></div>
+        <div class="rail-card-meta">
+          <span class="tag">SaaS &middot; CRO</span>
+          <h3>Vantage</h3>
+          <p>26 structured landing page tests over three quarters.</p>
+          <span class="rail-result">+64% trial-to-paid conversion</span>
         </div>
       </div>
       <div class="rail-card rail-card-end">
         <h3>Want results like these?</h3>
         <p>Let's map your growth plan &mdash; no obligation, just a clear-eyed look at the opportunity.</p>
         <a href="projects.html" class="btn btn-accent btn-sm">See all projects &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY STACKLY ============ -->
+<section class="why-section">
+  <div class="container">
+    <div class="why-grid reveal">
+      <!-- Left: stacked image with inset -->
+      <div class="why-img-col">
+        <!-- Main: analyst reviewing real-time dashboard -->
+        <div class="why-img-main">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2400&auto=format&fit=crop" alt="Marketing analyst reviewing live performance dashboard with KPIs" loading="lazy">
+        </div>
+        <!-- Inset: team brand strategy workshop -->
+        <div class="why-img-inset">
+          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop" alt="Stackly brand strategy workshop team session" loading="lazy">
+        </div>
+      </div>
+      <!-- Right: why us copy -->
+      <div class="why-content">
+        <div class="eyebrow">Why Stackly</div>
+        <h2 data-split-scroll="words">The agency you wished you'd hired sooner.</h2>
+        <p>Most agencies sell activity. Stackly sells outcomes. That's not a tagline &mdash; it's baked into how we structure every engagement, how we report, and how we get paid.</p>
+        <p>We've been doing this for nine years. We've run $86M in ad spend, scaled 240+ brands, and maintained a 91% client retention rate. That last number is the one we're most proud of.</p>
+        <ul class="why-list">
+          <li>Every account gets a senior strategist. No juniors after the pitch.</li>
+          <li>Live dashboard from day one &mdash; you see what we see, always.</li>
+          <li>No lock-in contracts. We earn the renewal every quarter on results.</li>
+          <li>Strategy before software. Tools follow the brief, never the reverse.</li>
+          <li>90-day first results window, agreed in writing before we start.</li>
+        </ul>
+        <a href="about.html" class="btn btn-outline">Meet the team &rarr;</a>
       </div>
     </div>
   </div>
@@ -417,22 +569,38 @@
       <div class="process-row">
         <span class="process-num">01</span>
         <h3>Audit &amp; Diagnose</h3>
-        <p>We reverse-engineer your funnel to find where revenue is leaking before recommending a single channel.</p>
+        <p>We reverse-engineer your funnel to find where revenue is leaking before recommending a single channel or tool.</p>
+        <!-- Analytics / funnel review -->
+        <div class="process-row-img">
+          <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=800&auto=format&fit=crop" alt="Marketing funnel audit and analytics dashboard review" loading="lazy">
+        </div>
       </div>
       <div class="process-row">
         <span class="process-num">02</span>
         <h3>Strategy &amp; Roadmap</h3>
         <p>A 90-day plan tied to specific revenue and efficiency targets &mdash; reviewed with you, not delivered at you.</p>
+        <!-- Strategy / whiteboard session -->
+        <div class="process-row-img">
+          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop" alt="Marketing strategy workshop with team at whiteboard" loading="lazy">
+        </div>
       </div>
       <div class="process-row">
         <span class="process-num">03</span>
         <h3>Build &amp; Launch</h3>
-        <p>Creative, copy, and campaigns go live in weekly sprints so we're learning in-market, not in a deck.</p>
+        <p>Creative, copy, and campaigns go live in weekly sprints so we're learning in-market, not in a slide deck.</p>
+        <!-- Creative launch / content production -->
+        <div class="process-row-img">
+          <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?q=80&w=800&auto=format&fit=crop" alt="Creative team launching a digital marketing campaign" loading="lazy">
+        </div>
       </div>
       <div class="process-row">
         <span class="process-num">04</span>
         <h3>Scale &amp; Optimize</h3>
-        <p>Weekly reporting and a live dashboard mean you always know exactly what's working and why.</p>
+        <p>Weekly reporting and a live dashboard mean you always know exactly what's working, what's not, and what's next.</p>
+        <!-- Real-time analytics dashboard -->
+        <div class="process-row-img">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" alt="Live marketing performance dashboard showing real-time KPI tracking" loading="lazy">
+        </div>
       </div>
     </div>
   </div>
@@ -447,15 +615,15 @@
     </div>
     <div class="stat-box">
       <span class="stat-num">$<span data-counter="86">0</span>M</span>
-      <span class="stat-label">Ad spend managed</span>
+      <span class="stat-label">Ad spend managed annually</span>
     </div>
     <div class="stat-box">
-      <span class="stat-num"><span data-counter="3.4" data-suffix="x">0</span></span>
+      <span class="stat-num"><span data-counter="3.8" data-suffix="x">0</span></span>
       <span class="stat-label">Average ROAS lift</span>
     </div>
     <div class="stat-box">
-      <span class="stat-num"><span data-counter="97">0</span>%</span>
-      <span class="stat-label">Client retention</span>
+      <span class="stat-num"><span data-counter="91">0</span>%</span>
+      <span class="stat-label">Client retention rate</span>
     </div>
   </div>
 </section>
@@ -469,21 +637,21 @@
     </div>
     <div class="testimonial-grid reveal-stagger">
       <div class="testimonial-card">
-        <p>"Stackly rebuilt our entire acquisition funnel in eight weeks. Our cost per lead dropped 41% and never crept back up."</p>
+        <p>"Stackly rebuilt our entire acquisition funnel in eight weeks. Our cost per lead dropped 41% and never crept back up. They're the first agency that read our P&amp;L before touching our ad account."</p>
         <div class="testimonial-person">
           <div class="t-avatar">MK</div>
           <div><strong>Maya Kessler</strong><span>CMO, Northwave</span></div>
         </div>
       </div>
       <div class="testimonial-card">
-        <p>"The reporting alone is worth the retainer. We finally know which channel actually drives revenue, not just clicks."</p>
+        <p>"The live reporting dashboard alone is worth the retainer. We finally know which channel actually drives revenue, not just clicks. Three agencies before them couldn't tell us that."</p>
         <div class="testimonial-person">
           <div class="t-avatar">DR</div>
           <div><strong>Diego Ramos</strong><span>Founder, Fernly Goods</span></div>
         </div>
       </div>
       <div class="testimonial-card">
-        <p>"They think like operators, not vendors. Every recommendation came tied to a number we actually cared about."</p>
+        <p>"They think like operators, not vendors. Every recommendation came tied to a number we actually cared about. We grew our newsletter to 62K subscribers in 14 months from zero."</p>
         <div class="testimonial-person">
           <div class="t-avatar">SL</div>
           <div><strong>Sasha Lin</strong><span>VP Growth, Orbital Co</span></div>
@@ -504,23 +672,29 @@
       <a href="blog.html" class="btn btn-outline btn-sm">All articles &rarr;</a>
     </div>
     <div class="blog-preview-grid reveal-stagger">
+      <!-- SEO: content strategy research at desk -->
       <a href="blog.html" class="blog-card">
-        <div class="img-frame"><img src="https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?q=80&w=2000&auto=format&fit=crop" alt="Search engine optimization strategy notes on a desk" loading="lazy"><div class="frame-overlay"></div></div>
+        <div class="img-frame"><img src="https://images.unsplash.com/photo-1562577308-9e66f0c65ce5?q=80&w=2000&auto=format&fit=crop" alt="SEO specialist analysing topical content architecture for better rankings" loading="lazy"><div class="frame-overlay"></div></div>
         <span class="tag">SEO</span>
         <h3>Why topical authority beats backlinks in 2026</h3>
-        <span class="blog-meta">8 min read &middot; Jun 2026</span>
+        <p>The content architecture that's actually moving rankings &mdash; and why most link-building budgets are better spent elsewhere.</p>
+        <span class="blog-meta">By Priya Nair &middot; 8 min read &middot; Jun 2026</span>
       </a>
+      <!-- Paid media: ad platform dual monitors -->
       <a href="blog.html" class="blog-card">
-        <div class="img-frame"><img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=2000&auto=format&fit=crop" alt="Paid media advertising dashboard with performance charts" loading="lazy"><div class="frame-overlay"></div></div>
+        <div class="img-frame"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=2000&auto=format&fit=crop" alt="Paid media analyst reviewing CAC and ROAS on dual monitors" loading="lazy"><div class="frame-overlay"></div></div>
         <span class="tag">Paid Media</span>
         <h3>The CAC math most brands get wrong</h3>
-        <span class="blog-meta">6 min read &middot; Jun 2026</span>
+        <p>A practical framework for separating genuinely unprofitable channels from ones that just look expensive on paper.</p>
+        <span class="blog-meta">By Marcus Webb &middot; 6 min read &middot; Jun 2026</span>
       </a>
+      <!-- Brand: identity design / Figma session -->
       <a href="blog.html" class="blog-card">
-        <div class="img-frame"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2000&auto=format&fit=crop" alt="Brand identity moodboard and creative direction materials" loading="lazy"><div class="frame-overlay"></div></div>
+        <div class="img-frame"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2000&auto=format&fit=crop" alt="Brand identity designer reviewing visual system and positioning" loading="lazy"><div class="frame-overlay"></div></div>
         <span class="tag">Brand</span>
         <h3>Positioning is a sentence, not a slide deck</h3>
-        <span class="blog-meta">5 min read &middot; May 2026</span>
+        <p>If your positioning takes more than one sentence to explain, your team doesn't actually have one. Here's how to write it.</p>
+        <span class="blog-meta">By Elena Vasquez &middot; 5 min read &middot; May 2026</span>
       </a>
     </div>
   </div>
@@ -530,7 +704,7 @@
 <section class="cta-section" id="contact">
   <div class="container cta-inner">
     <h2 class="reveal" data-split-scroll="words">Ready to make growth predictable?</h2>
-    <p class="reveal">Tell us where you are and where you want to be. We'll tell you, honestly, whether we're the right fit.</p>
+    <p class="reveal">Tell us where you are and where you want to be. We'll tell you, honestly, whether we're the right fit &mdash; and map out the first 90 days in detail.</p>
     <div class="magnetic-wrap reveal">
       <a href="contact.html" class="btn btn-accent">Book a strategy call <span class="arrow">&rarr;</span></a>
     </div>
