@@ -106,13 +106,18 @@ h1,h2,h3,h4{
   padding:16px 30px; border-radius:100px;
   position:relative; overflow:hidden; white-space:nowrap;
   transition:transform .4s var(--ease);
+  background-color: linear-gradient(95deg, var(--violet), var(--signal));;
 }
 .btn-primary{background:var(--paper); color:var(--ink);}
 .btn-primary:hover{transform:translateY(-3px);}
 .btn-accent{background:linear-gradient(95deg, var(--violet), var(--signal)); color:var(--paper);}
 .btn-accent:hover{transform:translateY(-3px);}
-.btn-outline{border:1.5px solid var(--line); color:var(--paper);}
-.btn-outline:hover{border-color:var(--violet-soft); background:rgba(109,91,255,0.08);}
+.btn-outline{
+  border:1.5px solid var(--line);
+  color:var(--paper);
+  background:linear-gradient(95deg, var(--violet), var(--signal));
+}
+.btn-outline:hover{border-color:var(--violet-soft); transform:translateY(-3px);}
 .btn-sm{padding:11px 22px; font-size:13px;}
 .btn .arrow{transition:transform .35s var(--ease);}
 .btn:hover .arrow{transform:translateX(5px);}
