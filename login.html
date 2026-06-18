@@ -167,6 +167,52 @@
 }
 .auth-form input:focus{border-color:var(--violet); box-shadow:0 0 0 3px rgba(109,91,255,0.15);}
 
+/* ===================== PASSWORD FIELD + EYE TOGGLE ===================== */
+.password-field-wrap{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.password-field-wrap input[type="password"],
+.password-field-wrap input[type="text"].pw-as-text{
+  padding-right:44px; /* leave room for the icon */
+}
+.password-toggle-btn{
+  position:absolute;
+  right:4px;
+  top:50%;
+  transform:translateY(-50%);
+  width:36px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:none;
+  border:none;
+  padding:0;
+  margin:0;
+  cursor:pointer;
+  color:#9A97A8;
+  border-radius:8px;
+  transition:color .2s, background .2s;
+}
+.password-toggle-btn:hover{
+  color:var(--violet);
+  background:rgba(109,91,255,0.08);
+}
+.password-toggle-btn:focus-visible{
+  outline:2px solid var(--violet);
+  outline-offset:1px;
+}
+.password-toggle-btn svg{
+  width:19px;
+  height:19px;
+  display:block;
+}
+.password-toggle-btn .icon-eye-off{display:none;}
+.password-toggle-btn.is-visible .icon-eye{display:none;}
+.password-toggle-btn.is-visible .icon-eye-off{display:block;}
+
 /* ===================== FIELD ERROR STATE ===================== */
 .auth-form input.field-error{
   border-color:#FF5B3C !important;
@@ -395,6 +441,8 @@
   .auth-form input[type="email"],
   .auth-form input[type="password"],
   .auth-form input[type="text"]{padding:12px 14px; font-size:14.5px;}
+  .password-field-wrap input[type="password"],
+  .password-field-wrap input[type="text"].pw-as-text{padding-right:42px;}
   .auth-terms{font-size:12.5px;}
 }
 @media(max-width:400px){
@@ -489,7 +537,20 @@
           </div>
           <div class="form-field">
             <label for="li-pass">Password</label>
-            <input type="password" id="li-pass" required placeholder="Enter Your Password">
+            <div class="password-field-wrap">
+              <input type="password" id="li-pass" required placeholder="Enter Your Password">
+              <button type="button" class="password-toggle-btn" data-target-input="li-pass" aria-label="Show password" aria-pressed="false">
+                <svg class="icon-eye" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1.5 12s4-7.5 10.5-7.5S22.5 12 22.5 12s-4 7.5-10.5 7.5S1.5 12 1.5 12Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/>
+                </svg>
+                <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1.5 12s4-7.5 10.5-7.5S22.5 12 22.5 12s-4 7.5-10.5 7.5S1.5 12 1.5 12Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/>
+                  <line x1="3" y1="21" x2="21" y2="3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
           </div>
           <div class="form-options">
             <label class="checkbox-row">
@@ -539,8 +600,21 @@
           </div>
           <div class="form-field">
             <label for="su-pass">Password</label>
-            <input type="password" id="su-pass" required placeholder="Min. 8 characters"
-                   oninput="updateStrength(this.value)">
+            <div class="password-field-wrap">
+              <input type="password" id="su-pass" required placeholder="Min. 8 characters"
+                     oninput="updateStrength(this.value)">
+              <button type="button" class="password-toggle-btn" data-target-input="su-pass" aria-label="Show password" aria-pressed="false">
+                <svg class="icon-eye" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1.5 12s4-7.5 10.5-7.5S22.5 12 22.5 12s-4 7.5-10.5 7.5S1.5 12 1.5 12Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/>
+                </svg>
+                <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1.5 12s4-7.5 10.5-7.5S22.5 12 22.5 12s-4 7.5-10.5 7.5S1.5 12 1.5 12Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/>
+                  <line x1="3" y1="21" x2="21" y2="3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
             <div class="pw-strength-wrap">
               <div class="pw-strength-bar"><div class="pw-strength-fill" id="pwFill"></div></div>
               <p class="pw-strength-label" id="pwLabel">Enter a password</p>
@@ -548,7 +622,20 @@
           </div>
           <div class="form-field">
             <label for="su-pass2">Confirm password</label>
-            <input type="password" id="su-pass2" required placeholder="Repeat password">
+            <div class="password-field-wrap">
+              <input type="password" id="su-pass2" required placeholder="Repeat password">
+              <button type="button" class="password-toggle-btn" data-target-input="su-pass2" aria-label="Show password" aria-pressed="false">
+                <svg class="icon-eye" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1.5 12s4-7.5 10.5-7.5S22.5 12 22.5 12s-4 7.5-10.5 7.5S1.5 12 1.5 12Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/>
+                </svg>
+                <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1.5 12s4-7.5 10.5-7.5S22.5 12 22.5 12s-4 7.5-10.5 7.5S1.5 12 1.5 12Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/>
+                  <line x1="3" y1="21" x2="21" y2="3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
           </div>
           <p class="auth-terms">
             By creating an account you agree to our
@@ -620,6 +707,33 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="main.js"></script>
 <script>
+
+/* ===================== PASSWORD VISIBILITY TOGGLE ===================== */
+document.querySelectorAll('.password-toggle-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var inputId = btn.getAttribute('data-target-input');
+    var input = document.getElementById(inputId);
+    if(!input) return;
+    var isVisible = input.type === 'text';
+    if(isVisible){
+      input.type = 'password';
+      input.classList.remove('pw-as-text');
+      btn.classList.remove('is-visible');
+      btn.setAttribute('aria-label', 'Show password');
+      btn.setAttribute('aria-pressed', 'false');
+    } else {
+      input.type = 'text';
+      input.classList.add('pw-as-text');
+      btn.classList.add('is-visible');
+      btn.setAttribute('aria-label', 'Hide password');
+      btn.setAttribute('aria-pressed', 'true');
+    }
+    // Keep focus + caret position in the field after toggling
+    var pos = input.value.length;
+    input.focus();
+    if(input.setSelectionRange){ input.setSelectionRange(pos, pos); }
+  });
+});
 
 /* ===================== TOOLTIP HELPER ===================== */
 /* Tooltip is injected INSIDE the input's .form-field parent so
