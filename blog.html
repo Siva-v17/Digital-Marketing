@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Marketing Strategy & Growth Insights | Stackly</title>
+<meta name="description" content="Field notes on SEO, paid media, brand, and growth strategy from the Stackly team — practical, no-fluff marketing insights.">
+<link rel="icon" href="logo-stackly.png">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ============================================
+   STACKLY — shared inner-page styles
+   ============================================ */
+.page-hero{
+  background:radial-gradient(circle at 80% 0%, rgba(109,91,255,0.18), transparent 55%);
+  padding-bottom:0;
+}
+.page-hero .container{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
+  min-height:560px;
+}
+.page-hero-content{padding-bottom:80px;}
+.page-hero h1{margin-bottom:24px;}
+.page-hero-sub{color:var(--muted); font-size:18px; max-width:520px;}
+.page-hero-img{
+  position:relative;
+  align-self:stretch;
+  min-height:480px;
+  border-radius:24px 24px 0 0;
+  overflow:hidden;
+}
+.page-hero-img img{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+}
+.page-hero-img::after{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom right, rgba(109,91,255,0.15), transparent 60%);
+  pointer-events:none;
+}
+.hero-img-badge{
+  position:absolute; bottom:28px; left:28px;
+  background:rgba(10,10,18,0.85);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:14px;
+  padding:14px 20px;
+  display:flex; gap:20px;
+}
+.hero-badge-stat{text-align:center;}
+.hero-badge-stat strong{display:block; font-family:var(--f-display); font-size:22px; font-weight:700; background:linear-gradient(95deg,var(--violet),var(--signal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;}
+.hero-badge-stat span{font-size:11px; color:rgba(255,255,255,0.5); font-family:var(--f-mono);}
+@media (max-width:1024px){
+  .page-hero .container{grid-template-columns:1fr; min-height:auto;}
+  .page-hero-img{min-height:340px; border-radius:16px;}
+  .page-hero-content{padding-bottom:0;}
+}
+
+.cta-section{padding:160px 0; text-align:center; position:relative;}
+.cta-section::before{content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 50%, rgba(109,91,255,0.18), transparent 60%);}
+.cta-inner{position:relative; z-index:1; max-width:740px; margin:0 auto;}
+.cta-inner h2{font-size:clamp(36px,5.5vw,64px); margin-bottom:22px;}
+.cta-inner p{color:var(--muted); font-size:18px; margin-bottom:38px;}
+
+/* ============ FEATURED POST ============ */
+.featured-post-section{padding:20px 0 50px;}
+.featured-post{display:grid; grid-template-columns:1.1fr 1fr; gap:50px; align-items:center;}
+.featured-post-img{aspect-ratio:4/3;}
+.featured-post-content h2{font-size:clamp(26px,3.4vw,38px); margin:16px 0 16px;}
+.featured-post-content p{color:var(--muted); font-size:16px; margin-bottom:20px;}
+.featured-post-content .read-time{display:inline-flex; align-items:center; gap:8px; font-family:var(--f-mono); font-size:12px; color:var(--muted); background:var(--panel); border:1px solid var(--line); border-radius:100px; padding:5px 12px; margin-top:8px;}
+
+/* ============ FILTER ============ */
+.filter-bar-section{padding:10px 0 50px;}
+.filter-bar{display:flex; gap:10px; flex-wrap:wrap;}
+.filter-btn{padding:11px 22px; border-radius:100px; border:1px solid var(--line); font-size:14px; font-weight:600; color:var(--muted); transition:.3s;}
+.filter-btn.active{background:linear-gradient(95deg,var(--violet),var(--signal)); color:var(--paper); border-color:transparent;}
+.filter-btn:hover:not(.active){border-color:var(--violet-soft); color:var(--paper);}
+
+/* ============ BLOG GRID ============ */
+.blog-grid-section{padding:0 0 60px;}
+.blog-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
+.blog-card .img-frame{aspect-ratio:16/11; margin-bottom:20px;}
+.blog-card h3{font-size:21px; margin:14px 0 10px; line-height:1.3;}
+.blog-card p{color:var(--muted); font-size:14.5px; margin-bottom:14px;}
+.blog-meta{font-family:var(--f-mono); font-size:12.5px; color:var(--muted);}
+.load-more-wrap{display:flex; justify-content:center; padding:50px 0 100px;}
+
+/* ============ SERIES SECTION ============ */
+.series-section{padding:0 0 100px;}
+.series-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+.series-card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:28px 24px; position:relative; overflow:hidden;}
+.series-card::before{content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(95deg,var(--violet),var(--signal));}
+.series-num{font-family:var(--f-mono); font-size:11px; color:var(--signal-soft); text-transform:uppercase; letter-spacing:.08em; margin-bottom:12px;}
+.series-card h3{font-size:18px; margin-bottom:10px;}
+.series-card p{color:var(--muted); font-size:14px; margin-bottom:18px;}
+.series-posts-count{font-family:var(--f-mono); font-size:12px; color:var(--muted);}
+
+/* ============ NEWSLETTER ============ */
+.newsletter-section{padding:0 0 140px;}
+.newsletter-inner{display:grid; grid-template-columns:1.1fr 1fr; gap:50px; align-items:center; background:var(--panel); border:1px solid var(--line); border-radius:24px; padding:60px;}
+.newsletter-inner h2{font-size:clamp(26px,3.2vw,36px); margin-bottom:14px;}
+.newsletter-inner p{color:var(--muted); font-size:15.5px;}
+.newsletter-input-row{display:flex; gap:10px;}
+.newsletter-input-row input{flex:1; padding:16px 20px; background:var(--ink); border:1px solid var(--line); border-radius:100px; font-size:15px;}
+.newsletter-input-row input:focus{outline:none; border-color:var(--violet-soft);}
+.form-success{display:none; align-items:center; margin-top:14px; color:var(--violet-soft); font-size:14px;}
+.newsletter-sub-note{font-size:12.5px; color:var(--muted); margin-top:12px;}
+
+/* ============ POPULAR POSTS SIDEBAR STYLE ============ */
+.blog-layout{display:grid; grid-template-columns:1fr 300px; gap:60px; align-items:start;}
+.sidebar{
+  padding-top:8px;
+  position:sticky;
+  top:100px;
+  align-self:start;
+}
+.sidebar-block{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:24px; margin-bottom:24px;}
+.sidebar-block h4{font-size:15px; margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--line);}
+.sidebar-post{display:flex; gap:14px; align-items:flex-start; padding:12px 0; border-bottom:1px solid var(--line);}
+.sidebar-post:last-child{border-bottom:none; padding-bottom:0;}
+.sidebar-post-img{width:56px; height:56px; border-radius:8px; overflow:hidden; flex-shrink:0;}
+.sidebar-post-img img{width:100%; height:100%; object-fit:cover;}
+.sidebar-post-title{font-size:13.5px; line-height:1.4; color:var(--paper); display:block; margin-bottom:4px;}
+.sidebar-post-meta{font-size:12px; color:var(--muted);}
+.sidebar-tag{display:inline-block; padding:5px 12px; background:var(--ink); border:1px solid var(--line); border-radius:100px; font-size:12.5px; color:var(--muted); margin:4px 4px 4px 0; transition:.2s;}
+.sidebar-tag:hover{border-color:var(--violet-soft); color:var(--paper);}
+
+/* New sidebar blocks to fill the column */
+.sidebar-cta{
+  background:linear-gradient(160deg, rgba(109,91,255,0.16), rgba(255,91,60,0.1));
+  border:1px solid var(--violet-soft);
+  border-radius:var(--radius);
+  padding:24px;
+  margin-bottom:24px;
+}
+.sidebar-cta h4{font-size:16px; margin-bottom:8px; color:var(--paper);}
+.sidebar-cta p{font-size:13.5px; color:var(--muted); margin-bottom:16px; line-height:1.55;}
+.sidebar-cta .btn{width:100%; justify-content:center; font-size:13.5px; padding:11px 16px;}
+
+.sidebar-author{display:flex; align-items:center; gap:12px; margin-bottom:14px;}
+.sidebar-author-avatar{
+  width:44px; height:44px; border-radius:50%; overflow:hidden; flex-shrink:0;
+  background:linear-gradient(135deg,var(--violet),var(--signal));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--f-display); font-weight:700; color:#fff; font-size:15px;
+}
+.sidebar-author-name{font-size:14px; color:var(--paper); font-weight:600; display:block;}
+.sidebar-author-role{font-size:12px; color:var(--muted);}
+.sidebar-author-bio{font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:14px;}
+.sidebar-author-link{font-size:12.5px; color:var(--violet-soft); text-decoration:none; font-weight:600;}
+.sidebar-author-link:hover{text-decoration:underline;}
+
+.sidebar-stat-row{display:flex; justify-content:space-between; gap:10px;}
+.sidebar-stat{text-align:center; flex:1;}
+.sidebar-stat strong{display:block; font-family:var(--f-display); font-size:20px; font-weight:700; background:linear-gradient(95deg,var(--violet),var(--signal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;}
+.sidebar-stat span{font-size:10.5px; color:var(--muted); font-family:var(--f-mono); text-transform:uppercase; letter-spacing:.05em;}
+
+@media (max-width:1200px){
+  .blog-layout{grid-template-columns:1fr;}
+  .sidebar{position:static; display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+}
+@media (max-width:1024px){
+  .featured-post{grid-template-columns:1fr; gap:30px;}
+  .blog-grid{grid-template-columns:1fr 1fr;}
+  .newsletter-inner{grid-template-columns:1fr; padding:40px; text-align:left;}
+  .newsletter-input-row{flex-direction:column;}
+  .series-grid{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:640px){
+  .blog-grid{grid-template-columns:1fr;}
+  .series-grid{grid-template-columns:1fr;}
+  .sidebar{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-hero">
+  <div class="container">
+    <!-- LEFT: content -->
+    <div class="page-hero-content">
+      <div class="eyebrow reveal">The Journal</div>
+      <h1 data-split="words">Field notes on<br><span class="text-gradient">what's working.</span></h1>
+      <p class="page-hero-sub reveal">No-fluff thinking from the strategists actually running campaigns &mdash; not a content farm padding out a sitemap.</p>
+      <div class="breadcrumb reveal"><a href="index.html">Home</a> <span>/</span> <span>Blog</span></div>
+    </div>
+    <!-- RIGHT: image — person writing / content strategy at desk -->
+    <div class="page-hero-img reveal-scale">
+      <img
+        src="https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?q=80&w=2400&auto=format&fit=crop"
+        alt="Marketing strategist writing content and analysing SEO research at desk"
+        loading="eager">
+      <div class="hero-img-badge">
+        <div class="hero-badge-stat"><strong>50+</strong><span>Articles published</span></div>
+        <div class="hero-badge-stat"><strong>4.2K</strong><span>Subscribers</span></div>
+        <div class="hero-badge-stat"><strong>Monthly</strong><span>New issues</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ FEATURED POST ============ -->
+<section class="featured-post-section">
+  <div class="container">
+    <a href="#" class="featured-post reveal">
+      <!-- SEO: person analysing search data / topical content research -->
+      <div class="img-frame featured-post-img">
+        <img src="https://images.unsplash.com/photo-1562577308-9e66f0c65ce5?q=80&w=2400&auto=format&fit=crop" alt="SEO specialist analysing topical authority content architecture" loading="lazy">
+        <div class="frame-overlay"></div>
+      </div>
+      <div class="featured-post-content">
+        <span class="tag">SEO &middot; Featured</span>
+        <h2>Why topical authority beats backlinks in 2026</h2>
+        <p>Search algorithms have quietly shifted what "authority" means. We break down the content architecture that's actually moving rankings this year &mdash; and why most link-building budgets are better spent elsewhere. Includes the exact cluster structure we used to grow Fernly Goods 4.1x in 12 months.</p>
+        <span class="blog-meta">By Priya Nair &middot; 8 min read &middot; June 2026</span>
+        <div style="margin-top:12px;"><span class="read-time">8 min read</span></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ============ CATEGORY FILTER ============ -->
+<section class="filter-bar-section">
+  <div class="container">
+    <div class="filter-bar reveal">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">SEO</button>
+      <button class="filter-btn">Paid Media</button>
+      <button class="filter-btn">Brand</button>
+      <button class="filter-btn">Content</button>
+      <button class="filter-btn">CRO</button>
+      <button class="filter-btn">Lifecycle</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BLOG GRID + SIDEBAR ============ -->
+<section class="blog-grid-section">
+  <div class="container">
+    <div class="blog-layout">
+
+      <!-- MAIN GRID -->
+      <div>
+        <div class="blog-grid reveal-stagger">
+
+          <a href="#" class="blog-card">
+            <!-- Paid media: analytics on dual screens -->
+            <div class="img-frame"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=2000&auto=format&fit=crop" alt="Paid media buyer analysing CAC and ROAS metrics" loading="lazy"><div class="frame-overlay"></div></div>
+            <span class="tag">Paid Media</span>
+            <h3>The CAC math most brands get wrong</h3>
+            <p>A practical framework for separating "expensive" channels from genuinely unprofitable ones &mdash; and the spreadsheet we use with every new client.</p>
+            <span class="blog-meta">By Marcus Webb &middot; 6 min read &middot; June 2026</span>
+          </a>
+
+          <a href="#" class="blog-card">
+            <!-- Brand: positioning workshop / whiteboard -->
+            <div class="img-frame"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2000&auto=format&fit=crop" alt="Brand positioning workshop with team at whiteboard" loading="lazy"><div class="frame-overlay"></div></div>
+            <span class="tag">Brand</span>
+            <h3>Positioning is a sentence, not a slide deck</h3>
+            <p>If your positioning takes more than one sentence to explain, your team doesn't actually have one. Here's how to write the sentence.</p>
+            <span class="blog-meta">By Elena Vasquez &middot; 5 min read &middot; May 2026</span>
+          </a>
+
+          <a href="#" class="blog-card">
+            <!-- Email lifecycle: automation flow diagram on screen -->
+            <div class="img-frame"><img src="https://media.istockphoto.com/id/1090858480/photo/businessman-touching-screen-with-about-mailing.webp?a=1&b=1&s=612x612&w=0&k=20&c=AxtKrZCfSsrQ6uwztEimJNObcfs0PSNIVd4OlP0fLw0=" alt="Email lifecycle automation flow setup in Klaviyo" loading="lazy"><div class="frame-overlay"></div></div>
+            <span class="tag">Lifecycle</span>
+            <h3>The five email flows worth building first</h3>
+            <p>Before you touch a single campaign send, these five flows should already be live and generating revenue. Which order they go in, and why.</p>
+            <span class="blog-meta">By Priya Nair &middot; 7 min read &middot; May 2026</span>
+          </a>
+
+          <a href="#" class="blog-card">
+            <!-- Content: editorial meeting / content planning -->
+            <div class="img-frame"><img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2000&auto=format&fit=crop" alt="Content strategy team reviewing editorial calendar" loading="lazy"><div class="frame-overlay"></div></div>
+            <span class="tag">Content</span>
+            <h3>Why we killed our editorial calendar</h3>
+            <p>Rigid content calendars optimize for output. Here's the alternative system we use that ties every piece of content to a measurable audience outcome.</p>
+            <span class="blog-meta">By Theo Bergman &middot; 4 min read &middot; April 2026</span>
+          </a>
+
+          <a href="#" class="blog-card">
+            <!-- CRO: heatmap / A/B test results on monitor -->
+            <div class="img-frame"><img src="https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=2000&auto=format&fit=crop" alt="CRO analyst reviewing heatmap and A/B test revenue impact" loading="lazy"><div class="frame-overlay"></div></div>
+            <span class="tag">CRO</span>
+            <h3>The landing page test that actually moved revenue</h3>
+            <p>Not every winning A/B test matters. We explain how to identify the tests worth scaling vs. the ones that win in the tool but flatline in revenue.</p>
+            <span class="blog-meta">By Marcus Webb &middot; 6 min read &middot; April 2026</span>
+          </a>
+
+          <a href="#" class="blog-card">
+            <!-- SEO: Google Search Console / ranking data -->
+            <div class="img-frame"><img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2000&auto=format&fit=crop" alt="SEO analyst reviewing Google Search Console ranking data after core update" loading="lazy"><div class="frame-overlay"></div></div>
+            <span class="tag">SEO</span>
+            <h3>What the spring core update actually changed</h3>
+            <p>We audited 40 client sites after the update. Here's the pattern that emerged &mdash; and the one signal that predicted winners vs. losers more than any other.</p>
+            <span class="blog-meta">By Priya Nair &middot; 9 min read &middot; March 2026</span>
+          </a>
+
+          <a href="#" class="blog-card">
+            <!-- Paid media: TikTok / short-form video ad -->
+            <div class="img-frame"><img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?q=80&w=2000&auto=format&fit=crop" alt="TikTok ads creative testing and short-form video production" loading="lazy"><div class="frame-overlay"></div></div>
+            <span class="tag">Paid Media</span>
+            <h3>TikTok ads in 2026: what's actually working</h3>
+            <p>The creative formats, targeting approaches, and bid strategies we're running after a year of testing across a dozen accounts. No theory &mdash; just what's converting.</p>
+            <span class="blog-meta">By Priya Nair &middot; 7 min read &middot; March 2026</span>
+          </a>
+
+          <a href="#" class="blog-card">
+            <!-- Analytics: GA4 / attribution model discussion -->
+            <div class="img-frame"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2000&auto=format&fit=crop" alt="Marketing analytics dashboard showing attribution model comparison" loading="lazy"><div class="frame-overlay"></div></div>
+            <span class="tag">Analytics</span>
+            <h3>Attribution is broken. Here's how we work around it.</h3>
+            <p>No attribution model is right. All of them are useful. We explain the triangulation method we use to make spend decisions when the data disagrees with itself.</p>
+            <span class="blog-meta">By Marcus Webb &middot; 10 min read &middot; February 2026</span>
+          </a>
+
+          <a href="#" class="blog-card">
+            <!-- Brand: visual identity / logo system design -->
+            <div class="img-frame"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2000&auto=format&fit=crop" alt="Brand identity designer building visual system and logo variants in Figma" loading="lazy"><div class="frame-overlay"></div></div>
+            <span class="tag">Brand</span>
+            <h3>The brand audit we run on every new client</h3>
+            <p>A 12-point checklist for diagnosing whether a brand is a growth asset or a growth blocker. Answer these before briefing any agency &mdash; including us.</p>
+            <span class="blog-meta">By Theo Bergman &middot; 5 min read &middot; January 2026</span>
+          </a>
+
+        </div>
+
+        <div class="load-more-wrap reveal">
+          <button class="btn btn-outline">Load more articles</button>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar reveal">
+
+        <!-- Newsletter CTA card -->
+        <div class="sidebar-cta">
+          <h4>Get the playbook, monthly.</h4>
+          <p>One email a month with what's actually converting right now — no recycled listicles. 4,200 marketers already in.</p>
+          <a href="#newsletter-section" class="btn btn-accent" onclick="document.querySelector('.newsletter-section').scrollIntoView({behavior:'smooth'}); return false;">Subscribe free</a>
+        </div>
+
+        <!-- Popular posts -->
+        <div class="sidebar-block">
+          <h4>Most read</h4>
+          <a href="#" class="sidebar-post">
+            <div class="sidebar-post-img"><img src="https://images.unsplash.com/photo-1562577308-9e66f0c65ce5?q=80&w=200&auto=format&fit=crop" alt="" loading="lazy"></div>
+            <div>
+              <span class="sidebar-post-title">Why topical authority beats backlinks in 2026</span>
+              <span class="sidebar-post-meta">8 min &middot; SEO</span>
+            </div>
+          </a>
+          <a href="#" class="sidebar-post">
+            <div class="sidebar-post-img"><img src="https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=200&auto=format&fit=crop" alt="" loading="lazy"></div>
+            <div>
+              <span class="sidebar-post-title">The landing page test that moved revenue</span>
+              <span class="sidebar-post-meta">6 min &middot; CRO</span>
+            </div>
+          </a>
+          <a href="#" class="sidebar-post">
+            <div class="sidebar-post-img"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=200&auto=format&fit=crop" alt="" loading="lazy"></div>
+            <div>
+              <span class="sidebar-post-title">The CAC math most brands get wrong</span>
+              <span class="sidebar-post-meta">6 min &middot; Paid Media</span>
+            </div>
+          </a>
+          <a href="#" class="sidebar-post">
+            <div class="sidebar-post-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=200&auto=format&fit=crop" alt="" loading="lazy"></div>
+            <div>
+              <span class="sidebar-post-title">Attribution is broken. Here's how we work around it.</span>
+              <span class="sidebar-post-meta">10 min &middot; Analytics</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Author spotlight -->
+        <div class="sidebar-block">
+          <h4>Written by the team</h4>
+          <div class="sidebar-author">
+            <div class="sidebar-author-avatar">PN</div>
+            <div>
+              <span class="sidebar-author-name">Priya Nair</span>
+              <span class="sidebar-author-role">Head of SEO</span>
+            </div>
+          </div>
+          <p class="sidebar-author-bio">Priya leads content strategy and technical SEO for Stackly's client roster, with a focus on topical authority and search visibility that compounds over time.</p>
+          <a href="#" class="sidebar-author-link">View all posts by Priya &rarr;</a>
+        </div>
+
+        <!-- Quick stats -->
+        <div class="sidebar-block">
+          <h4>The Journal, by the numbers</h4>
+          <div class="sidebar-stat-row">
+            <div class="sidebar-stat">
+              <strong>50+</strong>
+              <span>Articles</span>
+            </div>
+            <div class="sidebar-stat">
+              <strong>4.2K</strong>
+              <span>Subscribers</span>
+            </div>
+            <div class="sidebar-stat">
+              <strong>9</strong>
+              <span>Topics</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Topics -->
+        <div class="sidebar-block">
+          <h4>Browse by topic</h4>
+          <a href="#" class="sidebar-tag">SEO</a>
+          <a href="#" class="sidebar-tag">Paid Media</a>
+          <a href="#" class="sidebar-tag">Brand</a>
+          <a href="#" class="sidebar-tag">CRO</a>
+          <a href="#" class="sidebar-tag">Lifecycle</a>
+          <a href="#" class="sidebar-tag">Analytics</a>
+          <a href="#" class="sidebar-tag">Content</a>
+          <a href="#" class="sidebar-tag">Strategy</a>
+          <a href="#" class="sidebar-tag">TikTok</a>
+          <a href="#" class="sidebar-tag">Meta Ads</a>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERIES SECTION ============ -->
+<section class="series-section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Series</div>
+      <h2 data-split-scroll="words">Deep dives worth saving.</h2>
+    </div>
+    <div class="series-grid reveal-stagger">
+      <div class="series-card">
+        <p class="series-num">Series 01</p>
+        <h3>The Performance Marketing Playbook</h3>
+        <p>A five-part framework for building a paid media program that doesn't collapse when a platform changes its algorithm.</p>
+        <span class="series-posts-count">5 articles</span>
+      </div>
+      <div class="series-card">
+        <p class="series-num">Series 02</p>
+        <h3>SEO Infrastructure</h3>
+        <p>Everything we know about building content architecture that compounds &mdash; from technical audits to topical mapping.</p>
+        <span class="series-posts-count">7 articles</span>
+      </div>
+      <div class="series-card">
+        <p class="series-num">Series 03</p>
+        <h3>Brand That Converts</h3>
+        <p>How positioning decisions made in a workshop end up determining whether a paid ad converts &mdash; or doesn't.</p>
+        <span class="series-posts-count">4 articles</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="newsletter-section">
+  <div class="container newsletter-inner reveal">
+    <div>
+      <h2 data-split-scroll="words">Get our best thinking, monthly.</h2>
+      <p>One email a month. No fluff, no recycled "10 tips" listicles &mdash; just what's actually working in-market from the people running the campaigns. 4,200 marketers already subscribed.</p>
+    </div>
+    <form id="newsletterForm" class="newsletter-form">
+      <div class="newsletter-input-row">
+        <input type="email" id="newsletterEmail" placeholder="Enter Your Email" required>
+        <button type="submit" class="btn btn-accent">Subscribe</button>
+      </div>
+      <div id="newsletterSuccess" class="form-success">Your response has been submitted. Check your inbox to confirm.</div>
+      <p class="newsletter-sub-note">No spam. Unsubscribe any time. We use Beehiiv.</p>
+    </form>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="chrome.js"></script>
+<script>buildChrome('blog');</script>
+<script src="main.js"></script>
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  /* Newsletter form: show success, then auto-reset back to a blank form */
+  const newsletterForm = document.getElementById('newsletterForm');
+  const newsletterEmail = document.getElementById('newsletterEmail');
+  const newsletterSuccess = document.getElementById('newsletterSuccess');
+  const newsletterInputRow = newsletterForm.querySelector('.newsletter-input-row');
+
+  newsletterForm.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    // Hide the input row, show the success message
+    newsletterInputRow.style.display = 'none';
+    newsletterSuccess.style.display = 'flex';
+    if (typeof gsap !== 'undefined') {
+      gsap.fromTo(newsletterSuccess, {opacity:0, y:8}, {opacity:1, y:0, duration:0.4, ease:'power3.out'});
+    }
+
+    // Auto-reset back to a fresh, empty form after a short delay
+    setTimeout(function(){
+      newsletterForm.reset();
+
+      const resetForm = () => {
+        newsletterSuccess.style.display = 'none';
+        newsletterInputRow.style.display = 'flex';
+        newsletterEmail.focus();
+      };
+
+      if (typeof gsap !== 'undefined') {
+        gsap.to(newsletterSuccess, {
+          opacity:0, y:8, duration:0.35, ease:'power3.in',
+          onComplete: resetForm
+        });
+      } else {
+        resetForm();
+      }
+    }, 3500);
+  });
+</script>
+</body>
+</html>

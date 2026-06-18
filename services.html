@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — SEO, Paid Media, Brand & More | Stackly</title>
+<meta name="description" content="Explore Stackly's full digital marketing service line: SEO, paid media, brand identity, content & social, email lifecycle, and conversion optimization.">
+<link rel="icon" href="logo-stackly.png">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ============================================
+   STACKLY — shared inner-page styles
+   ============================================ */
+.page-hero{
+  background:radial-gradient(circle at 80% 0%, rgba(109,91,255,0.18), transparent 55%);
+  padding-bottom:0;
+}
+.page-hero .container{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
+  min-height:560px;
+}
+.page-hero-content{padding-bottom:80px;}
+.page-hero h1{margin-bottom:24px;}
+.page-hero-sub{color:var(--muted); font-size:18px; max-width:520px;}
+.page-hero-img{
+  position:relative;
+  align-self:stretch;
+  min-height:480px;
+  border-radius:24px 24px 0 0;
+  overflow:hidden;
+}
+.page-hero-img img{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+}
+.page-hero-img::after{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom right, rgba(109,91,255,0.15), transparent 60%);
+  pointer-events:none;
+}
+.hero-img-badge{
+  position:absolute; bottom:28px; left:28px;
+  background:rgba(10,10,18,0.85);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:14px;
+  padding:14px 20px;
+  display:flex; gap:20px;
+}
+.hero-badge-stat{text-align:center;}
+.hero-badge-stat strong{display:block; font-family:var(--f-display); font-size:22px; font-weight:700; background:linear-gradient(95deg,var(--violet),var(--signal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;}
+.hero-badge-stat span{font-size:11px; color:rgba(255,255,255,0.5); font-family:var(--f-mono);}
+@media (max-width:1024px){
+  .page-hero .container{grid-template-columns:1fr; min-height:auto;}
+  .page-hero-img{min-height:340px; border-radius:16px;}
+  .page-hero-content{padding-bottom:0;}
+}
+
+.cta-section{padding:160px 0; text-align:center; position:relative;}
+.cta-section::before{content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 50%, rgba(109,91,255,0.18), transparent 60%);}
+.cta-inner{position:relative; z-index:1; max-width:740px; margin:0 auto;}
+.cta-inner h2{font-size:clamp(36px,5.5vw,64px); margin-bottom:22px;}
+.cta-inner p{color:var(--muted); font-size:18px; margin-bottom:38px;}
+
+/* ============ SERVICES OVERVIEW GRID ============ */
+.services-overview{padding:60px 0 100px;}
+.services-overview-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+.service-overview-card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:0; overflow:hidden; display:flex; flex-direction:column;
+}
+.service-overview-img{aspect-ratio:16/9;}
+.service-overview-img img{width:100%; height:100%; object-fit:cover;}
+.service-overview-body{padding:24px; flex:1;}
+.service-overview-body h3{font-size:18px; margin:0 0 10px;}
+.service-overview-body p{color:var(--muted); font-size:14px; margin:0;}
+
+/* ============ TABS ============ */
+.services-deep{padding:40px 0 120px;}
+.tab-nav{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:54px; border-bottom:1px solid var(--line); padding-bottom:24px;}
+.tab-btn{padding:11px 22px; border-radius:100px; border:1px solid var(--line); font-size:14px; font-weight:600; color:var(--muted); transition:.3s;}
+.tab-btn.active{background:linear-gradient(95deg,var(--violet),var(--signal)); color:var(--paper); border-color:transparent;}
+.tab-btn:hover:not(.active){border-color:var(--violet-soft); color:var(--paper);}
+
+.tab-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;}
+.tab-grid h2{font-size:clamp(28px,3.6vw,42px); margin:14px 0 20px;}
+.tab-grid p{color:var(--muted); font-size:17px; margin-bottom:26px;}
+.tab-img{aspect-ratio:4/3;}
+.service-points{margin-bottom:32px; display:flex; flex-direction:column; gap:12px;}
+.service-points li{padding-left:26px; position:relative; font-size:15px; color:var(--paper);}
+.service-points li::before{content:''; position:absolute; left:0; top:7px; width:12px; height:2px; background:var(--signal);}
+
+/* Tool/Platform logos row */
+.tool-row{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:28px;}
+.tool-badge{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:6px 12px; font-family:var(--f-mono); font-size:12px; color:var(--muted);}
+
+/* Results callout inside tab */
+.tab-result{background:var(--panel); border-left:3px solid var(--signal); border-radius:0 var(--radius) var(--radius) 0; padding:20px 24px; margin-bottom:28px;}
+.tab-result-num{font-family:var(--f-display); font-size:30px; font-weight:700; color:var(--violet-soft); display:block;}
+.tab-result-label{color:var(--muted); font-size:13px; margin-top:2px;}
+
+/* ============ PRICING ============ */
+.pricing-section{padding:40px 0 140px;}
+.pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+.pricing-card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:40px 32px; position:relative;}
+.pricing-card.featured{border-color:var(--violet-soft); background:linear-gradient(160deg, var(--panel-soft), var(--panel)); transform:translateY(-10px);}
+.pricing-badge{position:absolute; top:-13px; left:32px; background:linear-gradient(95deg,var(--violet),var(--signal)); font-family:var(--f-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; padding:6px 14px; border-radius:100px;}
+.pricing-card h3{font-size:24px; margin-bottom:8px;}
+.pricing-desc{color:var(--muted); font-size:14.5px; margin-bottom:24px;}
+.price{font-family:var(--f-display); font-size:40px; font-weight:700; margin-bottom:28px;}
+.price span{font-size:15px; font-weight:400; color:var(--muted);}
+.pricing-card ul{margin-bottom:30px; display:flex; flex-direction:column; gap:11px;}
+.pricing-card li{font-size:14.5px; color:var(--muted); padding-left:22px; position:relative;}
+.pricing-card li::before{content:'\2713'; position:absolute; left:0; color:var(--violet-soft);}
+
+/* ============ PROCESS ============ */
+.process-section{padding:0 0 140px;}
+.process-steps{display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative;}
+.process-steps::after{content:''; position:absolute; top:28px; left:12%; right:12%; height:1px; background:var(--line); z-index:0;}
+.process-step{text-align:center; padding:0 16px; position:relative; z-index:1;}
+.process-icon{width:56px; height:56px; border-radius:50%; background:var(--panel); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; font-family:var(--f-mono); font-size:13px; color:var(--signal-soft);}
+.process-step h4{font-size:16px; margin-bottom:8px;}
+.process-step p{color:var(--muted); font-size:13.5px;}
+
+/* ============ FAQ ============ */
+.faq-section{padding:0 0 140px;}
+.faq-list{max-width:840px;}
+.faq-item{border-bottom:1px solid var(--line);}
+.faq-q{width:100%; display:flex; justify-content:space-between; align-items:center; padding:26px 0; font-family:var(--f-display); font-size:19px; text-align:left;}
+.faq-icon{font-size:22px; color:var(--violet-soft); transition:transform .35s var(--ease);}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-a{overflow:hidden;}
+.faq-a p{color:var(--muted); padding-bottom:26px; max-width:680px; font-size:15.5px;}
+
+@media (max-width:1024px){
+  .tab-grid{grid-template-columns:1fr; gap:36px;}
+  .pricing-grid{grid-template-columns:1fr; gap:30px;}
+  .pricing-card.featured{transform:none;}
+  .services-overview-grid{grid-template-columns:repeat(2,1fr);}
+  .process-steps{grid-template-columns:repeat(2,1fr); gap:36px;}
+  .process-steps::after{display:none;}
+}
+@media (max-width:640px){
+  .services-overview-grid{grid-template-columns:1fr;}
+  .process-steps{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-hero">
+  <div class="container">
+    <!-- LEFT: content -->
+    <div class="page-hero-content">
+      <div class="eyebrow reveal">Services</div>
+      <h1 data-split="words">Channels we run,<br><span class="text-gradient">numbers we own.</span></h1>
+      <p class="page-hero-sub reveal">Six disciplines, one team. We mix and match based on where your growth actually lives &mdash; not what's easiest for us to sell.</p>
+      <div class="breadcrumb reveal"><a href="index.html">Home</a> <span>/</span> <span>Services</span></div>
+    </div>
+    <!-- RIGHT: image — paid media / multi-screen ad platform setup -->
+    <div class="page-hero-img reveal-scale">
+      <img
+        src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=2400&auto=format&fit=crop"
+        alt="Digital marketing specialist managing paid media campaigns across multiple platforms"
+        loading="eager">
+      <div class="hero-img-badge">
+        <div class="hero-badge-stat"><strong>6</strong><span>Disciplines</span></div>
+        <div class="hero-badge-stat"><strong>3.8x</strong><span>Avg. ROAS</span></div>
+        <div class="hero-badge-stat"><strong>90-day</strong><span>First results</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ SERVICES OVERVIEW ============ -->
+<section class="services-overview">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">What we do</div>
+      <h2 data-split-scroll="words">Six disciplines built to compound.</h2>
+    </div>
+    <div class="services-overview-grid reveal-stagger">
+      <div class="service-overview-card">
+        <!-- SEO: keyboard + analytics screen -->
+        <div class="service-overview-img"><img src="https://images.unsplash.com/photo-1562577308-9e66f0c65ce5?q=80&w=1600&auto=format&fit=crop" alt="SEO keyword research and content strategy workflow" loading="lazy"></div>
+        <div class="service-overview-body"><h3>Search Engine Optimization</h3><p>Technical infrastructure and content architecture designed to compound over years.</p></div>
+      </div>
+      <div class="service-overview-card">
+        <!-- Paid Media: person at dual monitors with ad platform -->
+        <div class="service-overview-img"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1600&auto=format&fit=crop" alt="Paid media buyer managing Google Ads and Meta campaigns" loading="lazy"></div>
+        <div class="service-overview-body"><h3>Paid Media &amp; PPC</h3><p>Full-funnel media buying across Search, Meta, TikTok, and programmatic display.</p></div>
+      </div>
+      <div class="service-overview-card">
+        <!-- Brand: moodboard / identity design -->
+        <div class="service-overview-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1600&auto=format&fit=crop" alt="Brand identity design system and visual moodboard" loading="lazy"></div>
+        <div class="service-overview-body"><h3>Brand &amp; Identity</h3><p>Positioning and visual systems built to be instantly recognizable &mdash; and hard to copy.</p></div>
+      </div>
+      <div class="service-overview-card">
+        <!-- Content: person filming short-form video -->
+        <div class="service-overview-img"><img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?q=80&w=1600&auto=format&fit=crop" alt="Short-form video content creation for social media" loading="lazy"></div>
+        <div class="service-overview-body"><h3>Content &amp; Social</h3><p>Editorial strategy and always-on social production to build a durable audience.</p></div>
+      </div>
+      <div class="service-overview-card">
+        <!-- Email: email automation flows on screen -->
+        <div class="service-overview-img"><img src="https://media.istockphoto.com/id/1090858480/photo/businessman-touching-screen-with-about-mailing.webp?a=1&b=1&s=612x612&w=0&k=20&c=AxtKrZCfSsrQ6uwztEimJNObcfs0PSNIVd4OlP0fLw0=" alt="Email marketing automation and lifecycle flow setup" loading="lazy"></div>
+        <div class="service-overview-body"><h3>Email &amp; Lifecycle</h3><p>Retention flows that turn one-time buyers into a compounding revenue line.</p></div>
+      </div>
+      <div class="service-overview-card">
+        <!-- CRO: heatmap / A/B test on monitor -->
+        <div class="service-overview-img"><img src="https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=1600&auto=format&fit=crop" alt="Conversion rate optimization heatmap and A/B test results" loading="lazy"></div>
+        <div class="service-overview-body"><h3>Conversion Rate Optimization</h3><p>Structured testing programs that close the gap between traffic and revenue.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW WE WORK ============ -->
+<section class="process-section">
+  <div class="container">
+    <div class="section-head center reveal" style="text-align:center;">
+      <div class="eyebrow" style="justify-content:center;">How it works</div>
+      <h2 data-split-scroll="words">From brief to live campaign in four steps.</h2>
+    </div>
+    <div class="process-steps reveal-stagger">
+      <div class="process-step">
+        <div class="process-icon">01</div>
+        <h4>Audit &amp; diagnose</h4>
+        <p>We read your P&amp;L, pull your ad account history, and map the full funnel before making a single recommendation.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-icon">02</div>
+        <h4>Build the strategy</h4>
+        <p>Positioning, channel mix, and 90-day roadmap. You sign off before a dollar is spent.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-icon">03</div>
+        <h4>Execute &amp; test</h4>
+        <p>Campaigns go live. Every creative and copy variant is tracked. We iterate on a weekly cadence, not monthly.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-icon">04</div>
+        <h4>Report &amp; compound</h4>
+        <p>You see every metric in real time. Quarterly reviews identify the next lever to pull.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICE TABS (Deep Dives) ============ -->
+<section class="services-deep">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Deep dives</div>
+      <h2 data-split-scroll="words">Pick a channel, see exactly what we do.</h2>
+    </div>
+    <div class="service-tabs-group" data-tabs>
+      <div class="tab-nav reveal">
+        <button class="tab-btn active" data-tab-btn="seo">SEO</button>
+        <button class="tab-btn" data-tab-btn="paid">Paid Media</button>
+        <button class="tab-btn" data-tab-btn="brand">Brand</button>
+        <button class="tab-btn" data-tab-btn="content">Content &amp; Social</button>
+        <button class="tab-btn" data-tab-btn="email">Email &amp; Lifecycle</button>
+        <button class="tab-btn" data-tab-btn="cro">CRO</button>
+      </div>
+
+      <div class="tab-panels">
+        <!-- SEO -->
+        <div class="tab-panel" data-tab-panel="seo">
+          <div class="tab-grid">
+            <div>
+              <span class="tag">01 &middot; Organic growth</span>
+              <h2>Search Engine Optimization</h2>
+              <p>We treat SEO as infrastructure, not a checklist. Technical audits, content architecture, and authority building designed to compound over years &mdash; not just rank for a quarter.</p>
+              <div class="tab-result">
+                <span class="tab-result-num">4.1x</span>
+                <span class="tab-result-label">Average organic revenue lift for e-commerce clients in year two</span>
+              </div>
+              <ul class="service-points">
+                <li>Technical audits &amp; Core Web Vitals fixes</li>
+                <li>Topical content architecture &amp; clustering</li>
+                <li>Digital PR &amp; authority link building</li>
+                <li>International &amp; multi-site SEO</li>
+                <li>Schema markup &amp; structured data implementation</li>
+                <li>Monthly ranking reports tied to revenue, not positions</li>
+              </ul>
+              <div class="tool-row">
+                <span class="tool-badge">Semrush</span>
+                <span class="tool-badge">Screaming Frog</span>
+                <span class="tool-badge">Ahrefs</span>
+                <span class="tool-badge">Google Search Console</span>
+              </div>
+              <a href="contact.html" class="btn btn-accent btn-sm">Talk about SEO &rarr;</a>
+            </div>
+            <div>
+              <!-- SEO: content team writing and analysing keyword research -->
+              <div class="img-frame tab-img"><img src="https://images.unsplash.com/photo-1562577308-9e66f0c65ce5?q=80&w=2400&auto=format&fit=crop" alt="SEO specialist performing keyword research and content gap analysis" loading="lazy"><div class="frame-overlay"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAID MEDIA -->
+        <div class="tab-panel" data-tab-panel="paid" style="display:none">
+          <div class="tab-grid">
+            <div>
+              <span class="tag">02 &middot; Performance media</span>
+              <h2>Paid Media &amp; PPC</h2>
+              <p>Full-funnel media buying across Search, Meta, TikTok, and programmatic display &mdash; built around CAC payback, not vanity click-through rates. We manage the creative, the data, and the spend in one team.</p>
+              <div class="tab-result">
+                <span class="tab-result-num">-41%</span>
+                <span class="tab-result-label">Average CAC reduction after first 90-day restructure</span>
+              </div>
+              <ul class="service-points">
+                <li>Search &amp; shopping campaign management</li>
+                <li>Meta, TikTok &amp; programmatic media buying</li>
+                <li>Creative testing &amp; weekly iteration sprints</li>
+                <li>Server-side tracking &amp; attribution setup</li>
+                <li>Competitive intelligence &amp; auction analysis</li>
+                <li>Monthly creative performance teardown</li>
+              </ul>
+              <div class="tool-row">
+                <span class="tool-badge">Google Ads</span>
+                <span class="tool-badge">Meta Ads</span>
+                <span class="tool-badge">TikTok Ads</span>
+                <span class="tool-badge">DV360</span>
+                <span class="tool-badge">Triple Whale</span>
+              </div>
+              <a href="contact.html" class="btn btn-accent btn-sm">Talk about paid media &rarr;</a>
+            </div>
+            <div>
+              <!-- Paid media: dual-screen setup with Meta Ads Manager open -->
+              <div class="img-frame tab-img"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=2400&auto=format&fit=crop" alt="Paid media manager reviewing Meta Ads and Google Ads performance dashboards" loading="lazy"><div class="frame-overlay"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BRAND -->
+        <div class="tab-panel" data-tab-panel="brand" style="display:none">
+          <div class="tab-grid">
+            <div>
+              <span class="tag">03 &middot; Identity</span>
+              <h2>Brand &amp; Identity</h2>
+              <p>Positioning, naming, and visual systems built to be instantly recognizable &mdash; and hard for competitors to copy. We run workshops that end with a single sentence, not a 50-slide deck.</p>
+              <div class="tab-result">
+                <span class="tab-result-num">6 wks</span>
+                <span class="tab-result-label">Average time from brief to final brand guidelines delivery</span>
+              </div>
+              <ul class="service-points">
+                <li>Brand strategy &amp; positioning workshops</li>
+                <li>Naming, taglines &amp; verbal identity</li>
+                <li>Logo &amp; visual identity systems</li>
+                <li>Brand guidelines &amp; asset libraries</li>
+                <li>Pitch decks &amp; investor-facing collateral</li>
+                <li>Brand voice &amp; tone-of-voice documentation</li>
+              </ul>
+              <div class="tool-row">
+                <span class="tool-badge">Figma</span>
+                <span class="tool-badge">Adobe CC</span>
+                <span class="tool-badge">Loom</span>
+              </div>
+              <a href="contact.html" class="btn btn-accent btn-sm">Talk about brand &rarr;</a>
+            </div>
+            <div>
+              <!-- Brand: designer working on visual identity system -->
+              <div class="img-frame tab-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2400&auto=format&fit=crop" alt="Brand designer working on visual identity and logo system in Figma" loading="lazy"><div class="frame-overlay"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTENT & SOCIAL -->
+        <div class="tab-panel" data-tab-panel="content" style="display:none">
+          <div class="tab-grid">
+            <div>
+              <span class="tag">04 &middot; Audience</span>
+              <h2>Content &amp; Social</h2>
+              <p>Editorial strategy and always-on social production designed to build a durable audience &mdash; not just chase impressions. We produce, publish, and report in one integrated team.</p>
+              <div class="tab-result">
+                <span class="tab-result-num">62K</span>
+                <span class="tab-result-label">Newsletter subscribers built from zero for a B2B SaaS client</span>
+              </div>
+              <ul class="service-points">
+                <li>Editorial strategy &amp; content pillars</li>
+                <li>Short-form video scripting &amp; production direction</li>
+                <li>LinkedIn, Instagram &amp; TikTok management</li>
+                <li>Influencer &amp; creator partnership sourcing</li>
+                <li>Newsletter &amp; community growth strategy</li>
+                <li>Monthly content performance reporting</li>
+              </ul>
+              <div class="tool-row">
+                <span class="tool-badge">Buffer</span>
+                <span class="tool-badge">Beehiiv</span>
+                <span class="tool-badge">Substack</span>
+                <span class="tool-badge">Creator.co</span>
+              </div>
+              <a href="contact.html" class="btn btn-accent btn-sm">Talk about content &rarr;</a>
+            </div>
+            <div>
+              <!-- Content: short-form video shoot setup -->
+              <div class="img-frame tab-img"><img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?q=80&w=2400&auto=format&fit=crop" alt="Content creation team filming short-form social media video" loading="lazy"><div class="frame-overlay"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMAIL & LIFECYCLE -->
+        <div class="tab-panel" data-tab-panel="email" style="display:none">
+          <div class="tab-grid">
+            <div>
+              <span class="tag">05 &middot; Retention</span>
+              <h2>Email &amp; Lifecycle</h2>
+              <p>Retention flows and lifecycle campaigns that turn one-time buyers into a compounding revenue line &mdash; often the highest-ROI channel we run. Most clients see payback within the first 60 days of launch.</p>
+              <div class="tab-result">
+                <span class="tab-result-num">38%</span>
+                <span class="tab-result-label">Of total revenue driven by lifecycle flows for a retail client</span>
+              </div>
+              <ul class="service-points">
+                <li>Welcome, browse &amp; cart abandonment flows</li>
+                <li>Post-purchase and replenishment sequences</li>
+                <li>Segmentation &amp; lifecycle stage mapping</li>
+                <li>SMS &amp; cross-channel orchestration</li>
+                <li>Deliverability &amp; list health audits</li>
+                <li>Monthly revenue attribution reporting</li>
+              </ul>
+              <div class="tool-row">
+                <span class="tool-badge">Klaviyo</span>
+                <span class="tool-badge">Iterable</span>
+                <span class="tool-badge">Braze</span>
+                <span class="tool-badge">Postmark</span>
+                <span class="tool-badge">Attentive</span>
+              </div>
+              <a href="contact.html" class="btn btn-accent btn-sm">Talk about lifecycle &rarr;</a>
+            </div>
+            <div>
+              <!-- Email: clean email template on laptop -->
+              <div class="img-frame tab-img"><img src="https://images.unsplash.com/photo-1596526131083-e8c633964948?q=80&w=2400&auto=format&fit=crop" alt="Email lifecycle marketing flow being designed in Klaviyo" loading="lazy"><div class="frame-overlay"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CRO -->
+        <div class="tab-panel" data-tab-panel="cro" style="display:none">
+          <div class="tab-grid">
+            <div>
+              <span class="tag">06 &middot; Conversion</span>
+              <h2>Conversion Rate Optimization</h2>
+              <p>Landing page design and structured testing programs that close the gap between traffic and revenue &mdash; the highest-leverage work most brands skip because it's slower to sell than ad spend.</p>
+              <div class="tab-result">
+                <span class="tab-result-num">+64%</span>
+                <span class="tab-result-label">Trial-to-paid conversion lift across three quarters of testing for a SaaS client</span>
+              </div>
+              <ul class="service-points">
+                <li>Landing page design &amp; copywriting</li>
+                <li>A/B and multivariate testing programs</li>
+                <li>Funnel &amp; checkout audit</li>
+                <li>Heatmaps, session recording &amp; UX research</li>
+                <li>Form optimization &amp; lead quality analysis</li>
+                <li>Monthly test velocity reporting</li>
+              </ul>
+              <div class="tool-row">
+                <span class="tool-badge">VWO</span>
+                <span class="tool-badge">Optimizely</span>
+                <span class="tool-badge">Hotjar</span>
+                <span class="tool-badge">FullStory</span>
+                <span class="tool-badge">Unbounce</span>
+              </div>
+              <a href="contact.html" class="btn btn-accent btn-sm">Talk about CRO &rarr;</a>
+            </div>
+            <div>
+              <!-- CRO: analyst reviewing heatmap and A/B test on monitor -->
+              <div class="img-frame tab-img"><img src="https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=2400&auto=format&fit=crop" alt="CRO analyst reviewing Hotjar heatmap and A/B test results on monitor" loading="lazy"><div class="frame-overlay"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="pricing-section">
+  <div class="container">
+    <div class="section-head center reveal" style="text-align:center;">
+      <div class="eyebrow" style="justify-content:center;">Engagement models</div>
+      <h2 data-split-scroll="words">Built around your stage, not ours.</h2>
+      <p>Every plan includes the live reporting dashboard. No setup fees, no surprise invoices.</p>
+    </div>
+    <div class="pricing-grid reveal-stagger">
+      <div class="pricing-card">
+        <h3>Launch</h3>
+        <p class="pricing-desc">For early-stage teams validating channels before scaling.</p>
+        <div class="price">$4,500<span>/mo</span></div>
+        <ul>
+          <li>1&ndash;2 channels of focus</li>
+          <li>Bi-weekly strategy calls</li>
+          <li>Live performance dashboard</li>
+          <li>Monthly creative refresh</li>
+          <li>Slack access to your strategist</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline btn-sm">Start here &rarr;</a>
+      </div>
+      <div class="pricing-card featured">
+        <span class="pricing-badge">Most popular</span>
+        <h3>Scale</h3>
+        <p class="pricing-desc">For funded teams ready to grow aggressively with full-stack support.</p>
+        <div class="price">$9,800<span>/mo</span></div>
+        <ul>
+          <li>3&ndash;4 channels, fully integrated</li>
+          <li>Weekly strategy &amp; reporting calls</li>
+          <li>Dedicated media buyer &amp; strategist</li>
+          <li>Bi-weekly creative production</li>
+          <li>Quarterly brand &amp; positioning review</li>
+          <li>Priority Slack support (same business day)</li>
+        </ul>
+        <a href="contact.html" class="btn btn-accent btn-sm">Start here &rarr;</a>
+      </div>
+      <div class="pricing-card">
+        <h3>Enterprise</h3>
+        <p class="pricing-desc">For category leaders running complex, multi-market programs.</p>
+        <div class="price">Custom</div>
+        <ul>
+          <li>Full-channel coverage</li>
+          <li>Dedicated pod: strategist, buyer, analyst, creative</li>
+          <li>Custom attribution &amp; data integration</li>
+          <li>Executive quarterly business reviews</li>
+          <li>Dedicated Slack channel + shared Notion workspace</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline btn-sm">Talk to us &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq-section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Common questions</div>
+      <h2 data-split-scroll="words">Before you reach out.</h2>
+    </div>
+    <div class="faq-list reveal-stagger">
+      <div class="faq-item">
+        <button class="faq-q">How quickly will we see results? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Paid media typically shows directional signal within 2&ndash;4 weeks. SEO and content compound more slowly &mdash; expect meaningful movement by month three, with the real payoff in months six through twelve. We set those expectations at kick-off, in writing.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do you require long-term contracts? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>No. We work on 90-day initial engagements, then move to month-to-month. We'd rather earn the renewal with results than lock you in with a 12-month clause.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can you work alongside our in-house team? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Yes &mdash; about half our clients have an internal marketing function. We typically plug in on the channels where you need specialist depth or extra capacity, and we're explicit upfront about who owns what so there's no duplication.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What industries do you specialize in? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Primarily B2B SaaS, fintech, and e-commerce, though our process generalizes well to most considered-purchase and repeat-purchase businesses. If we don't think we're the right fit for your vertical, we'll tell you in the intro call.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What's included in the live reporting dashboard? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Every channel we manage feeds into a single Looker Studio view: spend, revenue, CAC, ROAS, pipeline by source, and a rolling 13-month trend. You get a live link on day one. No waiting for a monthly PDF.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do you have minimum ad spend requirements? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>For paid media management we recommend a minimum monthly media budget of $10,000 to generate statistically meaningful test data. Below that threshold, organic channels like SEO and lifecycle typically deliver better ROI and we'll say so.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container cta-inner">
+    <h2 class="reveal" data-split-scroll="words">Not sure which service fits?</h2>
+    <p class="reveal">Send us your current numbers and we'll tell you, in writing, where we'd start.</p>
+    <div class="magnetic-wrap reveal">
+      <a href="contact.html" class="btn btn-accent">Get a free audit <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="chrome.js"></script>
+<script>buildChrome('services');</script>
+<script src="main.js"></script>
+</body>
+</html>

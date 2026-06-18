@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Stackly — Our Story, Team & Values</title>
+<meta name="description" content="Learn how Stackly became a performance-driven digital marketing agency, meet the leadership team, and see the values behind every campaign we run.">
+<link rel="icon" href="logo-stackly.png">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ============================================
+   STACKLY — shared inner-page styles
+   ============================================ */
+.page-hero{
+  background:radial-gradient(circle at 80% 0%, rgba(109,91,255,0.18), transparent 55%);
+  padding-bottom:0;
+}
+.page-hero .container{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
+  min-height:560px;
+}
+.page-hero-content{padding-bottom:80px;}
+.page-hero h1{margin-bottom:24px;}
+.page-hero-sub{color:var(--muted); font-size:18px; max-width:520px;}
+.page-hero-img{
+  position:relative;
+  align-self:stretch;
+  min-height:480px;
+  border-radius:24px 24px 0 0;
+  overflow:hidden;
+}
+.page-hero-img img{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+}
+.page-hero-img::after{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom right, rgba(109,91,255,0.15), transparent 60%);
+  pointer-events:none;
+}
+/* floating stat badge inside hero image */
+.hero-img-badge{
+  position:absolute; bottom:28px; left:28px;
+  background:rgba(10,10,18,0.85);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:14px;
+  padding:14px 20px;
+  display:flex; gap:20px;
+}
+.hero-badge-stat{text-align:center;}
+.hero-badge-stat strong{display:block; font-family:var(--f-display); font-size:22px; font-weight:700; background:linear-gradient(95deg,var(--violet),var(--signal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;}
+.hero-badge-stat span{font-size:11px; color:rgba(255,255,255,0.5); font-family:var(--f-mono);}
+@media (max-width:1024px){
+  .page-hero .container{grid-template-columns:1fr; min-height:auto;}
+  .page-hero-img{min-height:340px; border-radius:16px;}
+  .page-hero-content{padding-bottom:0;}
+}
+
+.cta-section{padding:160px 0; text-align:center; position:relative;}
+.cta-section::before{content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 50%, rgba(109,91,255,0.18), transparent 60%);}
+.cta-inner{position:relative; z-index:1; max-width:740px; margin:0 auto;}
+.cta-inner h2{font-size:clamp(36px,5.5vw,64px); margin-bottom:22px;}
+.cta-inner p{color:var(--muted); font-size:18px; margin-bottom:38px;}
+
+/* ============ STORY ============ */
+.story-section{padding:60px 0 140px;}
+.story-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:80px; align-items:center;}
+.story-img{aspect-ratio:4/5;}
+.story-content h2{font-size:clamp(30px,4vw,44px); margin:18px 0 22px;}
+.story-content p{color:var(--muted); font-size:17px; margin-bottom:18px;}
+
+/* ============ STATS BAND ============ */
+.stats-band{padding:60px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-bottom:100px;}
+.stats-band-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:0;}
+.stat-band-item{text-align:center; padding:20px; border-right:1px solid var(--line);}
+.stat-band-item:last-child{border-right:none;}
+.stat-band-num{font-family:var(--f-display); font-size:42px; font-weight:700; background:linear-gradient(95deg,var(--violet),var(--signal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; display:block;}
+.stat-band-label{color:var(--muted); font-size:14px; margin-top:6px;}
+
+/* ============ VALUES ============ */
+.values-section{padding:0 0 140px;}
+.values-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
+.value-card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:32px 26px;}
+.value-num{font-family:var(--f-mono); color:var(--signal-soft); font-size:14px;}
+.value-card h3{font-size:19px; margin:16px 0 10px;}
+.value-card p{color:var(--muted); font-size:14.5px;}
+
+/* ============ CULTURE ============ */
+.culture-section{padding:0 0 100px;}
+.culture-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+.culture-row-top{display:grid; grid-template-columns:1.4fr 1fr; gap:24px; margin-bottom:24px;}
+.culture-img-large{aspect-ratio:16/10;}
+.culture-img-small{aspect-ratio:4/3;}
+.culture-img-tall{aspect-ratio:3/4;}
+.culture-caption{margin-top:14px;}
+.culture-caption h4{font-size:16px; margin-bottom:6px;}
+.culture-caption p{color:var(--muted); font-size:14px;}
+/* content card replacing empty cell */
+.culture-content-card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:32px 28px; display:flex; flex-direction:column; justify-content:space-between;
+}
+.culture-content-card h3{font-size:22px; margin-bottom:16px; line-height:1.35;}
+.culture-content-card p{color:var(--muted); font-size:15px; margin-bottom:24px; flex:1;}
+.culture-facts{display:flex; flex-direction:column; gap:14px; margin-bottom:24px;}
+.culture-fact{display:flex; align-items:baseline; gap:12px;}
+.culture-fact-num{font-family:var(--f-display); font-size:28px; font-weight:700; background:linear-gradient(95deg,var(--violet),var(--signal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; white-space:nowrap;}
+.culture-fact-label{color:var(--muted); font-size:13.5px;}
+
+/* ============ TIMELINE ============ */
+.timeline-section{padding:0 0 140px;}
+.timeline{border-left:1px solid var(--line); padding-left:50px; position:relative;}
+.timeline-item{position:relative; padding-bottom:50px; display:grid; grid-template-columns:90px 1fr; gap:30px;}
+.timeline-item::before{content:''; position:absolute; left:-56px; top:4px; width:12px; height:12px; border-radius:50%; background:var(--signal); box-shadow:0 0 0 4px var(--ink), 0 0 0 5px var(--line);}
+.timeline-year{font-family:var(--f-display); font-size:22px; font-weight:700; color:var(--violet-soft);}
+.timeline-body h3{font-size:21px; margin-bottom:8px;}
+.timeline-body p{color:var(--muted); font-size:15px;}
+.timeline-img{aspect-ratio:16/7; margin-top:18px; border-radius:12px; overflow:hidden;}
+.timeline-img img{width:100%; height:100%; object-fit:cover;}
+
+/* ============ TEAM ============ */
+.team-section{padding:0 0 140px;}
+.team-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:26px;}
+.team-card .img-frame{aspect-ratio:3/4; margin-bottom:18px;}
+.team-card h3{font-size:18px; margin-bottom:4px;}
+.team-card span{font-size:13.5px; color:var(--muted);}
+
+/* ============ PRESS LOGOS ============ */
+.press-section{padding:0 0 100px; text-align:center;}
+.press-eyebrow{color:var(--muted); font-size:13px; letter-spacing:.1em; text-transform:uppercase; margin-bottom:36px;}
+.press-logos{display:flex; align-items:center; justify-content:center; gap:50px; flex-wrap:wrap; opacity:.45; filter:grayscale(1);}
+.press-logo{font-family:var(--f-display); font-size:20px; font-weight:700; color:var(--paper); letter-spacing:-.02em;}
+
+@media (max-width:1024px){
+  .story-grid{grid-template-columns:1fr; gap:48px;}
+  .values-grid{grid-template-columns:repeat(2,1fr);}
+  .team-grid{grid-template-columns:repeat(2,1fr);}
+  .timeline-item{grid-template-columns:1fr; gap:6px;}
+  .timeline{padding-left:30px;}
+  .timeline-item::before{left:-36px;}
+  .stats-band-grid{grid-template-columns:repeat(2,1fr);}
+  .stat-band-item:nth-child(2){border-right:none;}
+  .stat-band-item:nth-child(3){border-top:1px solid var(--line);}
+  .stat-band-item:nth-child(4){border-top:1px solid var(--line); border-right:none;}
+  .culture-row-top{grid-template-columns:1fr;}
+  .culture-grid{grid-template-columns:1fr;}
+}
+@media (max-width:640px){
+  .values-grid{grid-template-columns:1fr;}
+  .team-grid{grid-template-columns:1fr;}
+  .stats-band-grid{grid-template-columns:1fr;}
+  .stat-band-item{border-right:none; border-bottom:1px solid var(--line);}
+}
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-hero">
+  <div class="container">
+    <!-- LEFT: content -->
+    <div class="page-hero-content">
+      <div class="eyebrow reveal">About Stackly</div>
+      <h1 data-split="words">Nine years of turning<br>marketing budgets into<br><span class="text-gradient">growth engines.</span></h1>
+      <p class="page-hero-sub reveal">We started Stackly because most agencies sell activity. We wanted to sell outcomes &mdash; and build the team and tools to actually prove it.</p>
+      <div class="breadcrumb reveal"><a href="index.html">Home</a> <span>/</span> <span>About</span></div>
+    </div>
+    <!-- RIGHT: image — team strategy session -->
+    <div class="page-hero-img reveal-scale">
+      <img
+        src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2400&auto=format&fit=crop"
+        alt="Stackly team in a collaborative marketing strategy session"
+        loading="eager">
+      <div class="hero-img-badge">
+        <div class="hero-badge-stat"><strong>240+</strong><span>Brands scaled</span></div>
+        <div class="hero-badge-stat"><strong>$86M</strong><span>Ad spend managed</span></div>
+        <div class="hero-badge-stat"><strong>9 yrs</strong><span>In business</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ STATS BAND ============ -->
+<section class="stats-band">
+  <div class="container">
+    <div class="stats-band-grid reveal-stagger">
+      <div class="stat-band-item">
+        <span class="stat-band-num">240+</span>
+        <p class="stat-band-label">Brands scaled since 2016</p>
+      </div>
+      <div class="stat-band-item">
+        <span class="stat-band-num">$86M</span>
+        <p class="stat-band-label">Annual ad spend managed</p>
+      </div>
+      <div class="stat-band-item">
+        <span class="stat-band-num">38</span>
+        <p class="stat-band-label">Specialists across two studios</p>
+      </div>
+      <div class="stat-band-item">
+        <span class="stat-band-num">91%</span>
+        <p class="stat-band-label">Client retention year over year</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STORY ============ -->
+<section class="story-section">
+  <div class="container story-grid">
+    <div class="img-frame story-img reveal-scale">
+      <!-- Real digital marketing strategy session -->
+      <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2400&auto=format&fit=crop" alt="Stackly founding team in a performance marketing strategy session" loading="lazy">
+      <div class="frame-overlay"></div>
+    </div>
+    <div class="story-content">
+      <div class="eyebrow reveal">Our story</div>
+      <h2 class="reveal" data-split-scroll="words">Founded on a simple frustration.</h2>
+      <p class="reveal">In 2016, our founders were running marketing for three different startups and kept hitting the same wall: agencies that reported on vanity metrics while revenue stayed flat. So they built the agency they wished they could hire &mdash; one obsessed with the metrics that actually matter to a board.</p>
+      <p class="reveal">Today Stackly is a team of 38 strategists, designers, analysts, and media buyers across New York and Lisbon, working with brands from seed-stage startups to category leaders. Every engagement starts the same way: we read your P&amp;L before we touch your ad account.</p>
+      <p class="reveal">We're not the biggest agency. We're not trying to be. We take on a limited number of clients each quarter to make sure every account is fully resourced &mdash; not handed to a junior team after the pitch.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CULTURE IN PHOTOS ============ -->
+<section class="culture-section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Life at Stackly</div>
+      <h2 data-split-scroll="words">Where the work actually happens.</h2>
+    </div>
+
+    <!-- Row 1: wide shot left + tall portrait right -->
+    <div class="culture-row-top reveal-stagger">
+      <div>
+        <div class="img-frame culture-img-large">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2800&auto=format&fit=crop" alt="Stackly New York team reviewing live campaign dashboards" loading="lazy">
+          <div class="frame-overlay"></div>
+        </div>
+        <div class="culture-caption">
+          <h4>New York studio</h4>
+          <p>Campaign reviews, creative sprints, and the occasional heated debate about attribution models.</p>
+        </div>
+      </div>
+      <div>
+        <div class="img-frame culture-img-tall" style="aspect-ratio:3/4;">
+          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2000&auto=format&fit=crop" alt="Stackly creative team in a brand strategy workshop session" loading="lazy">
+          <div class="frame-overlay"></div>
+        </div>
+        <div class="culture-caption">
+          <h4>Brand workshops</h4>
+          <p>Our positioning sessions are three hours of hard thinking. We come out with a sentence, not a slide deck.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Lisbon photo + content card with agency facts -->
+    <div class="culture-grid reveal-stagger">
+      <div>
+        <div class="img-frame culture-img-small">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop" alt="Stackly Lisbon studio open-plan workspace" loading="lazy">
+          <div class="frame-overlay"></div>
+        </div>
+        <div class="culture-caption">
+          <h4>Lisbon studio</h4>
+          <p>Opened in 2021 to serve European and EMEA clients. Same standards as New York, better weather.</p>
+        </div>
+      </div>
+      <!-- Content card filling the right cell -->
+      <div class="culture-content-card">
+        <div>
+          <h3>A team that stays because the work is good.</h3>
+          <p>We're deliberate about size. 38 people means every client talks to a senior specialist, not an account manager relaying messages. Our average team tenure is 4.2 years &mdash; long for an agency, intentional for us.</p>
+        </div>
+        <div class="culture-facts">
+          <div class="culture-fact">
+            <span class="culture-fact-num">38</span>
+            <span class="culture-fact-label">Specialists across New York &amp; Lisbon</span>
+          </div>
+          <div class="culture-fact">
+            <span class="culture-fact-num">4.2 yrs</span>
+            <span class="culture-fact-label">Average team member tenure</span>
+          </div>
+          <div class="culture-fact">
+            <span class="culture-fact-num">91%</span>
+            <span class="culture-fact-label">Client retention rate year over year</span>
+          </div>
+        </div>
+        <a href="contact.html" class="btn btn-outline btn-sm" style="width:fit-content;">Join the team &rarr;</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ MISSION / VALUES ============ -->
+<section class="values-section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">What we believe</div>
+      <h2 data-split-scroll="words">Four principles that shape every engagement.</h2>
+    </div>
+    <div class="values-grid reveal-stagger">
+      <div class="value-card" data-tilt>
+        <span class="value-num">01</span>
+        <h3>Revenue is the only metric</h3>
+        <p>Impressions and clicks are inputs. We report, plan, and get paid against pipeline and revenue. If it doesn't touch the top line, we'll tell you.</p>
+      </div>
+      <div class="value-card" data-tilt>
+        <span class="value-num">02</span>
+        <h3>Strategy before software</h3>
+        <p>Tools change every year. We start with positioning and unit economics, then pick the stack to match. The strategy survives platform changes.</p>
+      </div>
+      <div class="value-card" data-tilt>
+        <span class="value-num">03</span>
+        <h3>Transparent, always</h3>
+        <p>You see the same dashboard we do. No black boxes, no inflated channel attribution. If a channel isn't working, you'll hear it from us first.</p>
+      </div>
+      <div class="value-card" data-tilt>
+        <span class="value-num">04</span>
+        <h3>Built to be fired</h3>
+        <p>No lock-in contracts disguised as "strategy." We earn the renewal every quarter, on results. That keeps us honest in ways a contract never could.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section class="timeline-section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Milestones</div>
+      <h2 data-split-scroll="words">A decade, condensed.</h2>
+    </div>
+    <div class="timeline reveal-stagger">
+      <div class="timeline-item">
+        <span class="timeline-year">2016</span>
+        <div class="timeline-body">
+          <h3>Stackly is founded</h3>
+          <p>Three people, one shared office in Brooklyn, and a single retainer client in fintech. Our first dashboard was a Google Sheet. We are not ashamed.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2018</span>
+        <div class="timeline-body">
+          <h3>Paid media desk launches</h3>
+          <p>We bring media buying in-house after watching too many handoffs slow campaigns down. A dedicated team means no more "we sent the brief to the partner" excuses.</p>
+          <div class="timeline-img">
+            <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=2400&auto=format&fit=crop" alt="Paid media performance dashboard showing Google Ads and Meta Ads metrics" loading="lazy">
+          </div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2021</span>
+        <div class="timeline-body">
+          <h3>100th client milestone &amp; Lisbon opens</h3>
+          <p>We hit our 100th client engagement and immediately opened a second studio in Lisbon. European time zones, same standards as New York.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2023</span>
+        <div class="timeline-body">
+          <h3>Proprietary reporting suite</h3>
+          <p>Launched our live client dashboard, replacing static monthly PDF reports for good. Every client now sees their numbers update in real time &mdash; same data we use to make decisions.</p>
+          <div class="timeline-img">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2400&auto=format&fit=crop" alt="Stackly live analytics dashboard showing real-time marketing performance metrics" loading="lazy">
+          </div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2026</span>
+        <div class="timeline-body">
+          <h3>240+ brands scaled</h3>
+          <p>Now a team of 38 across two continents, managing $86M in annual ad spend. Still taking on fewer clients than we could, on purpose.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEAM ============ -->
+<section class="team-section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Leadership</div>
+      <h2 data-split-scroll="words">The people behind the dashboard.</h2>
+    </div>
+    <div class="team-grid reveal-stagger">
+      <div class="team-card">
+        <div class="img-frame"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1200&auto=format&fit=crop" alt="Elena Vasquez, Co-Founder and CEO of Stackly" loading="lazy"><div class="frame-overlay"></div></div>
+        <h3>Elena Vasquez</h3>
+        <span>Co-Founder &amp; CEO</span>
+      </div>
+      <div class="team-card">
+        <div class="img-frame"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1200&auto=format&fit=crop" alt="Marcus Webb, Co-Founder and Chief Strategy Officer at Stackly" loading="lazy"><div class="frame-overlay"></div></div>
+        <h3>Marcus Webb</h3>
+        <span>Co-Founder &amp; Chief Strategy Officer</span>
+      </div>
+      <div class="team-card">
+        <div class="img-frame"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1200&auto=format&fit=crop" alt="Priya Nair, Head of Paid Media at Stackly" loading="lazy"><div class="frame-overlay"></div></div>
+        <h3>Priya Nair</h3>
+        <span>Head of Paid Media</span>
+      </div>
+      <div class="team-card">
+        <div class="img-frame"><img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=1200&auto=format&fit=crop" alt="Theo Bergman, Creative Director at Stackly" loading="lazy"><div class="frame-overlay"></div></div>
+        <h3>Theo Bergman</h3>
+        <span>Creative Director</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRESS ============ -->
+<section class="press-section">
+  <div class="container reveal">
+    <p class="press-eyebrow">As seen in</p>
+    <div class="press-logos">
+      <span class="press-logo">Forbes</span>
+      <span class="press-logo">TechCrunch</span>
+      <span class="press-logo">Adweek</span>
+      <span class="press-logo">Marketing Week</span>
+      <span class="press-logo">Inc.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-section">
+  <div class="container cta-inner">
+    <h2 class="reveal" data-split-scroll="words">Want to work with this team?</h2>
+    <p class="reveal">We take on a limited number of new clients each quarter to keep every account fully resourced.</p>
+    <div class="magnetic-wrap reveal">
+      <a href="contact.html" class="btn btn-accent">Get in touch <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="chrome.js"></script>
+<script>buildChrome('about');</script>
+<script src="main.js"></script>
+</body>
+</html>

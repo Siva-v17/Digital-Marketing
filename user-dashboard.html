@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Dashboard — Stackly</title>
+<meta name="description" content="Your live Stackly campaign dashboard: performance, reports, and deliverables for your account.">
+<link rel="icon" href="logo-stackly.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<style>
+.dash-body{
+  background:var(--ink-soft);
+}
+
+.dash-shell{
+  display:grid;
+  grid-template-columns:264px 1fr;
+  min-height:100vh;
+}
+
+/* ---- Sidebar ---- */
+.dash-sidebar{
+  background:var(--ink);
+  border-right:1px solid rgba(255,255,255,.06);
+  padding:28px 20px;
+  display:flex;
+  flex-direction:column;
+  position:sticky;
+  top:0;
+  height:100vh;
+}
+
+.dash-sidebar .nav-logo{
+  padding:0 8px 28px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  margin-bottom:20px;
+  display:flex;
+  align-items:left;
+  justify-content:space-between;
+}
+
+/* ---- Sidebar close button (mobile only) ---- */
+.dash-sidebar-close{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  width:30px;height:30px;
+  border-radius:9px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  color:var(--muted);
+  cursor:pointer;
+  flex-shrink:0;
+  transition:background .2s ease, color .2s ease;
+}
+.dash-sidebar-close svg{ width:16px; height:16px; }
+.dash-sidebar-close:hover{
+  background:rgba(255,255,255,.09);
+  color:var(--paper);
+}
+
+.dash-nav{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  flex:1;
+}
+
+.dash-nav-label{
+  font-size:.7rem;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:var(--muted);
+  padding:18px 12px 8px;
+}
+
+.dash-link{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:11px 12px;
+  border-radius:10px;
+  color:var(--muted);
+  text-decoration:none;
+  font-size:.92rem;
+  font-weight:500;
+  transition:background .25s ease, color .25s ease;
+}
+.dash-link svg{ width:18px; height:18px; flex-shrink:0; }
+.dash-link:hover{
+  background:rgba(255,255,255,.05);
+  color:var(--paper);
+}
+.dash-link.active{
+  background:linear-gradient(90deg, rgba(109,91,255,.18), rgba(109,91,255,.02));
+  color:var(--paper);
+  box-shadow:inset 2px 0 0 var(--violet);
+}
+
+.dash-sidebar-foot{
+  border-top:1px solid rgba(255,255,255,.07);
+  padding-top:16px;
+  margin-top:auto;
+}
+
+.dash-user-chip{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 10px;
+  border-radius:10px;
+}
+.dash-user-avatar{
+  width:36px;height:36px;
+  border-radius:50%;
+  background:linear-gradient(135deg, var(--violet), var(--signal));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:.85rem;
+  color:#fff;
+  flex-shrink:0;
+}
+.dash-user-meta{ line-height:1.3; min-width:0; }
+.dash-user-name{ font-size:.86rem; font-weight:600; color:var(--paper); }
+.dash-user-role{ font-size:.74rem; color:var(--muted); }
+.dash-logout{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:.84rem;
+  color:var(--muted);
+  text-decoration:none;
+  padding:8px 10px;
+  border-radius:8px;
+  transition:background .2s ease, color .2s ease;
+}
+.dash-logout:hover{ background:rgba(255,255,255,.05); color:var(--signal-soft); }
+
+/* ---- Main area ---- */
+.dash-main{
+  background:var(--ink-soft);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+.dash-topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding:24px 36px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  position:sticky;
+  top:0;
+  background:rgba(18,20,31,.85);
+  backdrop-filter:blur(12px);
+  z-index:20;
+}
+
+.dash-topbar h1{
+  font-family:var(--f-display);
+  font-size:1.5rem;
+  letter-spacing:-0.01em;
+}
+.dash-topbar-sub{ color:var(--muted); font-size:.86rem; margin-top:2px; }
+
+.dash-topbar-actions{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.dash-search{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--panel);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;
+  padding:9px 14px;
+  min-width:240px;
+}
+.dash-search input{
+  background:none;
+  border:none;
+  outline:none;
+  color:var(--paper);
+  font-family:inherit;
+  font-size:.85rem;
+  width:100%;
+}
+.dash-search svg{ width:16px; height:16px; color:var(--muted); flex-shrink:0; }
+
+.dash-icon-btn{
+  width:40px;height:40px;
+  border-radius:10px;
+  background:var(--panel);
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--muted);
+  cursor:pointer;
+  position:relative;
+  transition:border-color .2s ease, color .2s ease;
+}
+.dash-icon-btn:hover{ border-color:var(--violet); color:var(--paper); }
+.dash-icon-btn svg{ width:18px; height:18px; }
+.dash-icon-btn .dot{
+  position:absolute;
+  top:8px; right:9px;
+  width:7px; height:7px;
+  border-radius:50%;
+  background:var(--signal);
+}
+
+.dash-content{
+  padding:32px 36px 60px;
+}
+
+/* ---- KPI cards ---- */
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:20px;
+  margin-bottom:32px;
+}
+.kpi-card{
+  background:var(--panel);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:16px;
+  padding:24px;
+  position:relative;
+  overflow:hidden;
+}
+.kpi-card-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+.kpi-icon{
+  width:38px;height:38px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(109,91,255,.15);
+  color:var(--violet-soft);
+}
+.kpi-icon svg{ width:18px; height:18px; }
+.kpi-delta{
+  font-size:.78rem;
+  font-weight:700;
+  padding:4px 9px;
+  border-radius:999px;
+}
+.kpi-delta.up{ background:rgba(64,201,128,.15); color:#5FD995; }
+.kpi-delta.down{ background:rgba(255,91,60,.15); color:var(--signal-soft); }
+.kpi-value{
+  font-family:var(--f-display);
+  font-size:2rem;
+  letter-spacing:-0.01em;
+}
+.kpi-label{ color:var(--muted); font-size:.85rem; margin-top:4px; }
+.kpi-spark{ width:100%; height:36px; margin-top:14px; }
+
+/* ---- Panels / cards ---- */
+.dash-grid-2{
+  display:grid;
+  grid-template-columns:1.5fr 1fr;
+  gap:20px;
+  margin-bottom:24px;
+}
+.dash-panel{
+  background:var(--panel);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:16px;
+  padding:26px;
+}
+.dash-panel-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+.dash-panel-head h3{
+  font-family:var(--f-display);
+  font-size:1.1rem;
+}
+.dash-panel-head .panel-sub{ color:var(--muted); font-size:.8rem; margin-top:2px; }
+
+.dash-tabs-mini{
+  display:flex;
+  gap:6px;
+  background:var(--panel-soft);
+  border-radius:8px;
+  padding:4px;
+}
+.dash-tabs-mini button{
+  background:none;
+  border:none;
+  font-family:inherit;
+  font-size:.78rem;
+  font-weight:600;
+  color:var(--muted);
+  padding:6px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  transition:background .2s ease, color .2s ease;
+}
+.dash-tabs-mini button.active{ background:var(--violet); color:#fff; }
+
+.chart-canvas-wrap{ width:100%; height:260px; }
+
+/* ---- Tables ---- */
+.dash-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.88rem;
+}
+.dash-table thead th{
+  text-align:left;
+  color:var(--muted);
+  font-weight:600;
+  font-size:.76rem;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  padding:0 12px 12px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.dash-table tbody td{
+  padding:14px 12px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  vertical-align:middle;
+}
+.dash-table tbody tr{ transition:background .2s ease; }
+.dash-table tbody tr:hover{ background:rgba(255,255,255,.025); }
+
+.table-client-cell{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.table-avatar{
+  width:32px;height:32px;
+  border-radius:50%;
+  background:linear-gradient(135deg, var(--violet), var(--signal));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.74rem;
+  font-weight:700;
+  color:#fff;
+  flex-shrink:0;
+}
+
+.status-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:.76rem;
+  font-weight:600;
+  padding:5px 11px;
+  border-radius:999px;
+}
+.status-pill::before{ content:''; width:6px; height:6px; border-radius:50%; }
+.status-pill.live{ background:rgba(64,201,128,.13); color:#5FD995; }
+.status-pill.live::before{ background:#5FD995; }
+.status-pill.review{ background:rgba(255,193,7,.13); color:#FFD166; }
+.status-pill.review::before{ background:#FFD166; }
+.status-pill.paused{ background:rgba(168,166,184,.15); color:var(--muted); }
+.status-pill.paused::before{ background:var(--muted); }
+
+.progress-track{
+  width:100%;
+  height:6px;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg, var(--violet), var(--signal));
+}
+
+/* ---- Activity feed ---- */
+.activity-feed{ display:flex; flex-direction:column; gap:18px; }
+.activity-item{ display:flex; gap:14px; }
+.activity-dot{
+  width:32px;height:32px;
+  border-radius:50%;
+  background:var(--panel-soft);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  color:var(--violet-soft);
+}
+.activity-dot svg{ width:15px; height:15px; }
+.activity-text{ font-size:.86rem; line-height:1.45; }
+.activity-text strong{ color:var(--paper); }
+.activity-time{ font-size:.74rem; color:var(--muted); margin-top:2px; }
+
+/* ---- Project / deliverables list ---- */
+.deliv-list{ display:flex; flex-direction:column; gap:14px; }
+.deliv-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px;
+  border-radius:12px;
+  background:var(--panel-soft);
+}
+.deliv-icon{
+  width:38px;height:38px;
+  border-radius:10px;
+  background:rgba(109,91,255,.15);
+  color:var(--violet-soft);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+.deliv-icon svg{ width:17px; height:17px; }
+.deliv-meta{ flex:1; min-width:0; }
+.deliv-title{ font-size:.88rem; font-weight:600; }
+.deliv-sub{ font-size:.76rem; color:var(--muted); margin-top:2px; }
+
+/* ---- Three-column bottom row ---- */
+.dash-grid-3{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:20px;
+}
+
+/* ---- Mobile burger for dash (hidden desktop) ---- */
+.dash-burger{ display:none; }
+
+@media (max-width:1180px){
+  .kpi-grid{ grid-template-columns:repeat(2, 1fr); }
+  .dash-grid-2{ grid-template-columns:1fr; }
+  .dash-grid-3{ grid-template-columns:1fr; }
+}
+
+@media (max-width:900px){
+  .dash-shell{ grid-template-columns:1fr; }
+  .dash-sidebar{
+    position:fixed;
+    left:0; top:0;
+    width:264px;
+    height:100vh;
+    transform:translateX(-100%);
+    transition:transform .35s ease;
+    z-index:100;
+  }
+  .dash-sidebar.is-open{ transform:translateX(0); }
+  .dash-sidebar-close{ display:flex; }
+  .dash-burger{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:40px;height:40px;
+    border-radius:10px;
+    background:var(--panel);
+    border:1px solid rgba(255,255,255,.08);
+    cursor:pointer;
+  }
+  .dash-burger svg{ width:18px; height:18px; }
+  .dash-search{ display:none; }
+}
+
+@media (max-width:640px){
+  .kpi-grid{ grid-template-columns:1fr; }
+  .dash-content{ padding:24px 18px 48px; }
+  .dash-topbar{ padding:18px 18px; }
+}
+</style>
+<body class="dash-body">
+
+<div class="dash-shell">
+
+  <aside class="dash-sidebar" id="dashSidebar">
+
+    <!-- ✅ FIXED: close button is now INSIDE .nav-logo so it appears next to the logo -->
+    <div class="nav-logo">
+      <a href="index.html">
+        <img src="./stackly-removebg-preview.png" alt="STACKLY" class="nav-logo-img">
+      </a>
+      <button class="dash-sidebar-close" id="dashSidebarClose" aria-label="Close menu" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="dash-sidebar-foot">
+      <div class="dash-user-chip">
+        <div class="dash-user-avatar" id="sidebarAvatar">NW</div>
+        <div class="dash-user-meta">
+          <div class="dash-user-name" id="sidebarName">Northwave Inc.</div>
+          <div class="dash-user-role">Scale plan</div>
+        </div>
+      </div>
+    </div>
+    <nav class="dash-nav">
+      <a href="./Error.html" class="dash-link active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        Overview
+      </a>
+      <a href="./Error.html" class="dash-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l18-7-7 18-2.5-7.5L3 11z"/></svg>
+        Campaigns
+      </a>
+      <a href="./Error.html" class="dash-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h9l5 5v13a1 1 0 01-1 1H5a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M14 3v5h5"/><path d="M8 13h8M8 17h5"/></svg>
+        Deliverables
+      </a>
+      <a href="./Error.html" class="dash-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5M10 19V9M16 19v-7M22 19H2"/></svg>
+        Reports
+      </a>
+      <a href="./Error.html" class="dash-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 11-3.8-7.1L21 3l-1.3 4.1a8.5 8.5 0 011.3 4.4z"/></svg>
+        Messages
+      </a>
+      <a href="./Error.html" class="dash-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 115 0c0 2-2.5 2-2.5 4.5M12 17.5h.01"/></svg>
+        Help &amp; support
+      </a>
+      <a href="login.html" class="dash-logout" id="logoutLink">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="15" height="15"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        Log out
+      </a>
+    </nav>
+
+  </aside>
+
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div style="display:flex; align-items:center; gap:14px;">
+        <button class="dash-burger" id="dashBurger" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <div>
+          <h1 id="welcomeHeading">My Dashboard, Northwave</h1>
+          <div class="dash-topbar-sub">Your campaign performance, updated in real time.</div>
+        </div>
+      </div>
+      <div class="dash-topbar-actions">
+        <div class="dash-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="text" placeholder="Search reports, deliverables...">
+        </div>
+        <button class="dash-icon-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+          <span class="dot"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="dash-content">
+
+      <div class="kpi-grid">
+        <div class="kpi-card reveal">
+          <div class="kpi-card-top">
+            <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l5-5 4 4 8-9"/></svg></div>
+            <span class="kpi-delta up">+18.2%</span>
+          </div>
+          <div class="kpi-value">$<span data-counter="412">0</span>K</div>
+          <div class="kpi-label">Revenue attributed (this month)</div>
+          <svg class="kpi-spark" viewBox="0 0 200 40" preserveAspectRatio="none"><path d="M0 30 Q 20 10, 40 22 T 80 14 T 120 20 T 160 6 T 200 12" fill="none" stroke="#5FD995" stroke-width="2"/></svg>
+        </div>
+        <div class="kpi-card reveal">
+          <div class="kpi-card-top">
+            <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.5 6.8L21 11l-6.5 2.2L12 20l-2.5-6.8L3 11l6.5-2.2z"/></svg></div>
+            <span class="kpi-delta up">+0.4x</span>
+          </div>
+          <div class="kpi-value"><span data-counter="4.1" data-suffix="x">0</span></div>
+          <div class="kpi-label">Return on ad spend</div>
+          <svg class="kpi-spark" viewBox="0 0 200 40" preserveAspectRatio="none"><path d="M0 24 Q 20 20, 40 22 T 80 12 T 120 16 T 160 4 T 200 8" fill="none" stroke="#9C8FFF" stroke-width="2"/></svg>
+        </div>
+        <div class="kpi-card reveal">
+          <div class="kpi-card-top">
+            <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="7" r="3.2"/><path d="M2.5 20c0-3.6 2.9-6.2 6.5-6.2s6.5 2.6 6.5 6.2"/><circle cx="17.5" cy="8.5" r="2.4"/></svg></div>
+            <span class="kpi-delta up">+312</span>
+          </div>
+          <div class="kpi-value"><span data-counter="2840">0</span></div>
+          <div class="kpi-label">Qualified leads (MTD)</div>
+          <svg class="kpi-spark" viewBox="0 0 200 40" preserveAspectRatio="none"><path d="M0 26 Q 20 22, 40 24 T 80 16 T 120 18 T 160 8 T 200 10" fill="none" stroke="#FF8569" stroke-width="2"/></svg>
+        </div>
+        <div class="kpi-card reveal">
+          <div class="kpi-card-top">
+            <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg></div>
+            <span class="kpi-delta down">-4.6%</span>
+          </div>
+          <div class="kpi-value">$<span data-counter="18.40">0</span></div>
+          <div class="kpi-label">Avg. cost per lead</div>
+          <svg class="kpi-spark" viewBox="0 0 200 40" preserveAspectRatio="none"><path d="M0 10 Q 20 14, 40 12 T 80 20 T 120 18 T 160 26 T 200 24" fill="none" stroke="#FF5B3C" stroke-width="2"/></svg>
+        </div>
+      </div>
+
+      <div class="dash-grid-2">
+        <div class="dash-panel reveal" id="campaigns">
+          <div class="dash-panel-head">
+            <div>
+              <h3>Performance over time</h3>
+              <div class="panel-sub">Revenue vs. spend, last 6 months</div>
+            </div>
+            <div class="dash-tabs-mini">
+              <button class="active">6M</button>
+              <button>1Y</button>
+              <button>All</button>
+            </div>
+          </div>
+          <div class="chart-canvas-wrap"><canvas id="clientRevenueChart"></canvas></div>
+        </div>
+
+        <div class="dash-panel reveal">
+          <div class="dash-panel-head">
+            <div>
+              <h3>Spend by channel</h3>
+              <div class="panel-sub">This month</div>
+            </div>
+          </div>
+          <div class="chart-canvas-wrap"><canvas id="clientChannelChart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="dash-panel reveal" id="campaigns2" style="margin-bottom:24px;">
+        <div class="dash-panel-head">
+          <div>
+            <h3>Active campaigns</h3>
+            <div class="panel-sub">Live and in-flight campaigns on your account</div>
+          </div>
+        </div>
+        <table class="dash-table">
+          <thead>
+            <tr><th>Campaign</th><th>Channel</th><th>Budget</th><th>ROAS</th><th>Status</th><th>Pacing</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Q3 Brand Awareness Push</td>
+              <td>Paid Social</td>
+              <td>$18,000</td>
+              <td>3.8x</td>
+              <td><span class="status-pill live">Live</span></td>
+              <td><div class="progress-track"><div class="progress-fill" style="width:76%"></div></div></td>
+            </tr>
+            <tr>
+              <td>Search — Branded Terms</td>
+              <td>Paid Search</td>
+              <td>$12,500</td>
+              <td>5.2x</td>
+              <td><span class="status-pill live">Live</span></td>
+              <td><div class="progress-track"><div class="progress-fill" style="width:91%"></div></div></td>
+            </tr>
+            <tr>
+              <td>Always-on Retargeting</td>
+              <td>Display</td>
+              <td>$6,200</td>
+              <td>2.9x</td>
+              <td><span class="status-pill live">Live</span></td>
+              <td><div class="progress-track"><div class="progress-fill" style="width:58%"></div></div></td>
+            </tr>
+            <tr>
+              <td>Fall Lifecycle Email Series</td>
+              <td>Email</td>
+              <td>$3,400</td>
+              <td>6.1x</td>
+              <td><span class="status-pill review">In review</span></td>
+              <td><div class="progress-track"><div class="progress-fill" style="width:24%"></div></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="dash-grid-3">
+        <div class="dash-panel reveal" id="deliverables">
+          <div class="dash-panel-head"><h3>Deliverables</h3></div>
+          <div class="deliv-list">
+            <div class="deliv-item">
+              <div class="deliv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9" r="1.6"/><path d="M21 16l-5-5-4 4-3-3-5 5"/></svg></div>
+              <div class="deliv-meta"><div class="deliv-title">Fall creative refresh — 6 assets</div><div class="deliv-sub">Ready for review</div></div>
+            </div>
+            <div class="deliv-item">
+              <div class="deliv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h9l5 5v13a1 1 0 01-1 1H5a1 1 0 01-1-1V4a1 1 0 011-1z"/></svg></div>
+              <div class="deliv-meta"><div class="deliv-title">Q3 performance report (PDF)</div><div class="deliv-sub">Delivered Jun 14</div></div>
+            </div>
+            <div class="deliv-item">
+              <div class="deliv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.5 6.8L21 11l-6.5 2.2L12 20l-2.5-6.8L3 11l6.5-2.2z"/></svg></div>
+              <div class="deliv-meta"><div class="deliv-title">New landing page — A/B variant</div><div class="deliv-sub">In production</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-panel reveal" id="reports">
+          <div class="dash-panel-head"><h3>Recent activity</h3></div>
+          <div class="activity-feed">
+            <div class="activity-item">
+              <div class="activity-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg></div>
+              <div><div class="activity-text"><strong>Priya Nair</strong> updated your retargeting audience segments</div><div class="activity-time">3 hours ago</div></div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h9l5 5v13a1 1 0 01-1 1H5a1 1 0 01-1-1V4a1 1 0 011-1z"/></svg></div>
+              <div><div class="activity-text">Your Q3 performance report is ready to view</div><div class="activity-time">Yesterday</div></div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 6.8L21 11l-6.5 2.2L12 20l-2.5-6.8L3 11l6.5-2.2z"/></svg></div>
+              <div><div class="activity-text">New campaign "Always-on Retargeting" went live</div><div class="activity-time">3 days ago</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-panel reveal" id="messages">
+          <div class="dash-panel-head"><h3>Messages from your team</h3></div>
+          <div class="activity-feed">
+            <div class="activity-item">
+              <div class="dash-user-avatar" style="width:32px;height:32px;font-size:.72rem;">PN</div>
+              <div><div class="activity-text"><strong>Priya Nair:</strong> Creative refresh is in for review &mdash; check the Deliverables tab!</div><div class="activity-time">2 hours ago</div></div>
+            </div>
+            <div class="activity-item">
+              <div class="dash-user-avatar" style="width:32px;height:32px;font-size:.72rem;">MW</div>
+              <div><div class="activity-text"><strong>Marcus Webb:</strong> Q3 strategy call notes are attached to your report.</div><div class="activity-time">1 day ago</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="main.js"></script>
+<script>
+  // ---- Inject the logged-in client's name/initials ----
+  (function applySession(){
+    try {
+      const raw = localStorage.getItem('stackly_session');
+      if(!raw) return;
+      const session = JSON.parse(raw);
+      if(!session || session.role !== 'user') return;
+
+      const name = session.name || 'Client';
+      const initials = session.initials || name.slice(0,2).toUpperCase();
+      const firstWord = name.split(' ')[0];
+
+      const sidebarName = document.getElementById('sidebarName');
+      const sidebarAvatar = document.getElementById('sidebarAvatar');
+      const topbarAvatar = document.getElementById('topbarAvatar');
+      const welcomeHeading = document.getElementById('welcomeHeading');
+
+      if(sidebarName) sidebarName.textContent = name;
+      if(sidebarAvatar) sidebarAvatar.textContent = initials;
+      if(topbarAvatar) topbarAvatar.textContent = initials;
+      if(welcomeHeading) welcomeHeading.textContent = 'My Dashboard, ' + firstWord;
+    } catch(err) {
+      console.warn('Could not load session info, showing defaults.', err);
+    }
+  })();
+
+  // ---- Logout ----
+  document.getElementById('logoutLink')?.addEventListener('click', function(){
+    localStorage.removeItem('stackly_session');
+  });
+
+  // ---- Mobile sidebar open/close ----
+  document.getElementById('dashBurger')?.addEventListener('click', () => {
+    document.getElementById('dashSidebar').classList.toggle('is-open');
+  });
+
+  document.getElementById('dashSidebarClose')?.addEventListener('click', () => {
+    document.getElementById('dashSidebar').classList.remove('is-open');
+  });
+
+  // ---- Tab switcher ----
+  document.querySelectorAll('.dash-tabs-mini').forEach(group => {
+    group.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  });
+
+  // ---- Revenue chart ----
+  const revCtx = document.getElementById('clientRevenueChart');
+  if(revCtx){
+    new Chart(revCtx, {
+      type: 'line',
+      data: {
+        labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+        datasets: [
+          { label:'Revenue', data:[268,295,310,338,372,412], borderColor:'#9C8FFF', backgroundColor:'rgba(109,91,255,.12)', tension:.4, fill:true, pointRadius:0, borderWidth:3 },
+          { label:'Ad spend', data:[72,76,79,84,92,98], borderColor:'#FF8569', backgroundColor:'rgba(255,91,60,.08)', tension:.4, fill:true, pointRadius:0, borderWidth:3 }
+        ]
+      },
+      options: {
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ labels:{ color:'#A8A6B8', font:{family:'Inter'} } } },
+        scales:{
+          x:{ grid:{ color:'rgba(255,255,255,.06)' }, ticks:{ color:'#A8A6B8' } },
+          y:{ grid:{ color:'rgba(255,255,255,.06)' }, ticks:{ color:'#A8A6B8' } }
+        }
+      }
+    });
+  }
+
+  // ---- Channel doughnut chart ----
+  const chCtx = document.getElementById('clientChannelChart');
+  if(chCtx){
+    new Chart(chCtx, {
+      type: 'doughnut',
+      data: {
+        labels:['Paid Search','Paid Social','Display','Email'],
+        datasets:[{
+          data:[38,32,18,12],
+          backgroundColor:['#6D5BFF','#FF5B3C','#FFD166','#5FD995'],
+          borderColor:'#1A1D2E',
+          borderWidth:3
+        }]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ position:'bottom', labels:{ color:'#A8A6B8', boxWidth:10, font:{family:'Inter', size:11} } } }
+      }
+    });
+  }
+</script>
+</body>
+</html>
